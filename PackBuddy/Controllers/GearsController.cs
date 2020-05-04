@@ -26,13 +26,38 @@ namespace PackBuddy.Controllers
             _context = context;
         }
         // GET: Gears
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string searchString, int filter)
         {
+            var gearOptions = await _context.GearTypes.Select(g => new SelectListItem() { Text = g.Label, Value = g.Id.ToString() })
+               .ToListAsync();
+            ViewBag.ProductTypes = gearOptions;
             var user = await GetCurrentUserAsync();
+            if (searchString != null)
+            {
+                var usersGear = await _context.Gears.Where(g => g.ApplicationuserId == user.Id)
+                   .Where(g => g.Name.Contains(searchString))
+                   .Include(g => g.GearType)
+                   .ToListAsync();
+                return View(usersGear);
+
+            }
+            else if (filter != 0)
+            {
+                var usersGear = await _context.Gears.Where(g => g.ApplicationuserId == user.Id)
+                 .Where(g => g.GearTypeId == filter)
+                 .Include(g => g.GearType)
+                 .ToListAsync();
+                return View(usersGear);
+
+            }
+            else
+            {
+
             var usersGear = await _context.Gears.Where(g => g.ApplicationuserId == user.Id)
                 .Include(g => g.GearType)
                 .ToListAsync();
             return View(usersGear);
+            }
         }
 
         // GET: Gears/Details/5
