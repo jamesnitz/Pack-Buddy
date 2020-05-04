@@ -20,7 +20,8 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.GearType)
-            </th> 
+            </th>
+    
             <th></th>
         </tr>
     </thead>
@@ -39,6 +40,22 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+            <td></td>
+            <td>
+                <button data-target="#gearDetails" data-toggle="modal">View More</button>
+                <div class="modal" id="gearDetails" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button class="close"></button>
+                                <div class="modal-body">
+                                    <p>Myt stuff</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </td>
         </tr>
 }
