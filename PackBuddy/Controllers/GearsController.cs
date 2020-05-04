@@ -27,10 +27,10 @@ namespace PackBuddy.Controllers
         public async Task<ActionResult> Index()
         {
             var user = await GetCurrentUserAsync();
-            var UsersGear = await _context.Gears.Where(g => g.ApplicationuserId == user.Id)
+            var usersGear = await _context.Gears.Where(g => g.ApplicationuserId == user.Id)
                 .Include(g => g.GearType)
                 .ToListAsync();
-            return View();
+            return View(usersGear);
         }
 
         // GET: Gears/Details/5
