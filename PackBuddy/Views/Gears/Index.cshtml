@@ -23,14 +23,21 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button class="close"></button>
-                                    <div class="modal-body">
-                                        <p>@Html.DisplayFor(modelItem => item.Rating)</p>
-                                        <p>@Html.DisplayFor(modelItem => item.Condtion)</p>
-                                        <p>@Html.DisplayFor(modelItem => item.Description)</p>
-
-                                    </div>
+                                    <h4 class="modal-title">@item.Name</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
+                                <div class="modal-body">
+                                    <p>@Html.DisplayFor(modelItem => item.Rating)</p>
+                                    <p>@Html.DisplayFor(modelItem => item.Condtion)</p>
+                                    <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                                </div>
+                                <div>
+                                    <button class="btn btn-outline-success badge-success border-success">@Html.ActionLink("Edit", "Edit", new { id = item.Id }) </button>
+                                    <form asp-controller="Orders" asp-action="Delete" method="post">
+                                        <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove Item" />
+                                    </form>
+                                </div>
+
                             </div>
                         </div>
                     </div>
