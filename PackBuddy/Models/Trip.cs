@@ -17,7 +17,6 @@ namespace PackBuddy.Models
         [Required]
         public DateTime EndDate { get; set; }
         public string Notes { get; set; }
-        [Required]
         public string ApplicationuserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public List<GearTrip> GearTrips { get; set; }

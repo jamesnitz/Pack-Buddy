@@ -69,7 +69,12 @@ namespace PackBuddy.Data
                 new GearType()
                 {
                     Id = 5,
-                    Label = "Sleeping"
+                    Label = "Sleeping Gear"
+                },
+                new GearType()
+                {
+                    Id = 6,
+                    Label = "Accessories"
                 }
             );
 

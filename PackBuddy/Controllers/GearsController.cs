@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PackBuddy.Data;
 using PackBuddy.Models;
 
@@ -23,8 +24,12 @@ namespace PackBuddy.Controllers
             _context = context;
         }
         // GET: Gears
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
+            var user = await GetCurrentUserAsync();
+            var UsersGear = await _context.Gears.Where(g => g.ApplicationuserId == user.Id)
+                .Include(g => g.GearType)
+                .ToListAsync();
             return View();
         }
 

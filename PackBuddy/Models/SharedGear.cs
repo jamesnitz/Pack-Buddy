@@ -13,7 +13,6 @@ namespace PackBuddy.Models
         [Required]
         public int GearId { get; set; }
         public Gear Gear { get; set; }
-        [Required]
         public string ApplicationuserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public string RequestMessage { get; set; }
