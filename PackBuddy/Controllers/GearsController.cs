@@ -83,18 +83,45 @@ namespace PackBuddy.Controllers
         }
 
         // GET: Gears/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var gearOptions = await _context.GearTypes.Select(g => new SelectListItem() { Text = g.Label, Value = g.Id.ToString() })
+               .ToListAsync();
+            var gear = await _context.Gears.FirstOrDefaultAsync(g => g.Id == id);
+            var viewModel = new GearFormViewModel()
+            {
+                Name = gear.Name,
+                ImagePath = gear.ImagePath,
+                Condtion = gear.Condtion,
+                Description = gear.Description,
+                GearTypeId = gear.GearTypeId,
+                Rating = gear.Rating,
+                GearTypeOptions = gearOptions
+            };
+            return View(viewModel);
         }
 
         // POST: Gears/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, GearFormViewModel gearFormView)
         {
             try
             {
+                var user = await GetCurrentUserAsync();
+                var gearData = new Gear()
+                {
+                    Id = id,
+                    Name = gearFormView.Name,
+                    Condtion = gearFormView.Condtion,
+                    ApplicationuserId = user.Id,
+                    Description = gearFormView.Description,
+                    Rating = gearFormView.Rating,
+                    GearTypeId = gearFormView.GearTypeId,
+                    ImagePath = gearFormView.ImagePath
+                };
+                _context.Gears.Update(gearData);
+                await _context.SaveChangesAsync();
                 // TODO: Add update logic here
 
                 return RedirectToAction(nameof(Index));
