@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PackBuddy.Data;
 using PackBuddy.Models;
+using PackBuddy.Models.ViewModels.GearViewModels;
 
 namespace PackBuddy.Controllers
 {
@@ -40,18 +42,36 @@ namespace PackBuddy.Controllers
         }
 
         // GET: Gears/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            var gearOptions = await _context.GearTypes.Select(g => new SelectListItem() { Text = g.Label, Value = g.Id.ToString() })
+                .ToListAsync();
+            var viewModel = new GearFormViewModel();
+            viewModel.GearTypeOptions = gearOptions;
+            return View(viewModel);
         }
 
         // POST: Gears/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(GearFormViewModel gearFormView)
         {
             try
             {
+                var user = await GetCurrentUserAsync();
+                var gearData = new Gear()
+                {
+                    Name = gearFormView.Name,
+                    Condtion = gearFormView.Condtion,
+                    ApplicationuserId = user.Id,
+                    Description = gearFormView.Description,
+                    Rating = gearFormView.Rating,
+                    GearTypeId = gearFormView.GearTypeId,
+                    ImagePath = gearFormView.ImagePath
+                };
+                 _context.Gears.Add(gearData);
+                await _context.SaveChangesAsync();
+
                 // TODO: Add insert logic here
 
                 return RedirectToAction(nameof(Index));
