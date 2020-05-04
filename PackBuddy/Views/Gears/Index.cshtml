@@ -33,7 +33,7 @@
                                 </div>
                                 <div>
                                     <button class="btn btn-outline-success badge-success border-success">@Html.ActionLink("Edit", "Edit", new { id = item.Id }) </button>
-                                    <form asp-controller="Orders" asp-action="Delete" method="post">
+                                    <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@item.Id">
                                         <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove Item" />
                                     </form>
                                 </div>
