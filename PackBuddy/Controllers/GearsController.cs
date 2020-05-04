@@ -132,19 +132,18 @@ namespace PackBuddy.Controllers
             }
         }
 
-        // GET: Gears/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+
 
         // POST: Gears/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id)
         {
             try
-            {   
+            {
+                var gear = await _context.Gears.FirstOrDefaultAsync(g => g.Id == id);
+                _context.Gears.Remove(gear);
+                await _context.SaveChangesAsync();
                 // TODO: Add delete logic here
 
                 return RedirectToAction(nameof(Index));
