@@ -18,14 +18,17 @@
                 <p class="card-text">
                     @Html.DisplayFor(modelItem => item.Description)
                 </p>
-                    <button class="btn btn-info" data-target="#gearDetails" data-toggle="modal">View More</button>
-                    <div class="modal" id="gearDetails" role="dialog">
+                    <button class="btn btn-info" data-target="#gearDetails-@item.Id " data-toggle="modal">View More</button>
+                    <div class="modal" id="gearDetails-@item.Id" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button class="close"></button>
                                     <div class="modal-body">
-                                        <p>Myt stuff</p>
+                                        <p>@Html.DisplayFor(modelItem => item.Rating)</p>
+                                        <p>@Html.DisplayFor(modelItem => item.Condtion)</p>
+                                        <p>@Html.DisplayFor(modelItem => item.Description)</p>
+
                                     </div>
                                 </div>
                             </div>
