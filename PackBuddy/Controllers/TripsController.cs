@@ -49,15 +49,20 @@ namespace PackBuddy.Controllers
         // POST: Trips/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(Trip trip)
         {
             try
             {
+                var user = await GetCurrentUserAsync();
+                trip.ApplicationuserId = user.Id;
+                _context.Trips.Add(trip);
+                await _context.SaveChangesAsync();
+
                 // TODO: Add insert logic here
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
