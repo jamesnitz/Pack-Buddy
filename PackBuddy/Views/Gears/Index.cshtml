@@ -22,19 +22,13 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GearTypeId)
+                @Html.DisplayNameFor(model => model.GearType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Rating)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Condtion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImagePath)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicationuserId)
             </th>
             <th></th>
         </tr>
@@ -52,7 +46,7 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.GearTypeId)
+                @Html.DisplayFor(modelItem => item.GearType.Label)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Rating)
@@ -60,12 +54,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Condtion)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImagePath)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicationuserId)
-            </td>
+          
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
