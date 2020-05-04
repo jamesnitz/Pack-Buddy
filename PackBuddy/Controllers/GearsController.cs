@@ -38,6 +38,10 @@ namespace PackBuddy.Controllers
                    .Where(g => g.Name.Contains(searchString))
                    .Include(g => g.GearType)
                    .ToListAsync();
+                if (usersGear.Count < 1)
+                {
+                    ViewBag.nothingFound = true;
+                }
                 return View(usersGear);
 
             }
@@ -47,6 +51,10 @@ namespace PackBuddy.Controllers
                  .Where(g => g.GearTypeId == filter)
                  .Include(g => g.GearType)
                  .ToListAsync();
+                if (usersGear.Count < 1)
+                {
+                    ViewBag.nothingFound = true;
+                }
                 return View(usersGear);
 
             }

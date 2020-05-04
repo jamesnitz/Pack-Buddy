@@ -17,10 +17,11 @@
     <button  class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Search</button>
 </form>
 </div>
-
 <p>
     <a asp-action="Create">Add Gear</a>
 </p>
+@if(ViewBag.nothingFound != true)
+{
 <div class="gearCardList">
     @foreach (var item in Model)
     {
@@ -59,4 +60,9 @@
         </div>
     }
 </div>
-
+}
+else
+{
+    <h1>Nothing Found</h1>
+    <h2>Try searching for different items or borrow something!</h2>
+}
