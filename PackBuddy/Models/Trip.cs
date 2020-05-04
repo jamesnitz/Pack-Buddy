@@ -15,11 +15,9 @@ namespace PackBuddy.Models
         public string Name { get; set; }
         [Required]
         [DataType(DataType.Date)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime StartDate { get; set; }
         [Required]
         [DataType(DataType.Date)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime EndDate { get; set; }
         public string Notes { get; set; }
         public string ApplicationuserId { get; set; }
