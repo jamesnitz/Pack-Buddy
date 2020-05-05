@@ -3,7 +3,12 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+@if (TempData.ContainsKey("tripCreated"))
+{
+    <div class="alert alert-success">@TempData["tripCreated"]
+    @Html.ActionLink("Add Gear", "Create", "GearTrips", new { tripId = ViewBag.tripId }) 
+    </div>
+}
 <h1>Index</h1>
 
 <p>

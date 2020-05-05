@@ -66,8 +66,10 @@ namespace PackBuddy.Controllers
                 await _context.SaveChangesAsync();
 
                 // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(TripCreated));
+                TempData["tripCreated"] = "Your trip has been created.";
+                ViewBag.tripId = trip.Id;
+                return RedirectToAction("Index", "Trips");
+                //return RedirectToAction(nameof(TripCreated));
             }
             catch(Exception ex)
             {
