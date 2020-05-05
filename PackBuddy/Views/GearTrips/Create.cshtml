@@ -28,7 +28,9 @@
                         @Html.DisplayFor(modelItem => item.Description)
                     </p>
                 </div>
-                <input asp-for="AddedGears" type="checkbox" class="form-control" value="true">
+                <input type="checkbox" id="@item.Id" class="form-control" value="true">
+            
+
             </div>
         }
     </div>
