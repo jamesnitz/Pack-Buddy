@@ -73,6 +73,10 @@ body {
     display: flex;
     justify-content: space-evenly;
 }
+.tripCardList {
+    display: flex;
+    justify-content: space-evenly;
+}
 
 .homeButtons{
    text-align: center;

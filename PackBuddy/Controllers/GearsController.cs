@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -100,9 +101,19 @@ namespace PackBuddy.Controllers
                     Description = gearFormView.Description,
                     Rating = gearFormView.Rating,
                     GearTypeId = gearFormView.GearTypeId,
-                    ImagePath = gearFormView.ImagePath
                 };
-                 _context.Gears.Add(gearData);
+
+                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images");
+                if (gearFormView.ImagePath != null)
+                {
+                    var fileName = Guid.NewGuid().ToString() + gearFormView.ImagePath.FileName;
+                    gearData.ImagePath = fileName;
+                    using (var fileStream = new FileStream(Path.Combine(uploadPath, fileName), FileMode.Create))
+                    {
+                        await gearFormView.ImagePath.CopyToAsync(fileStream);
+                    }
+                }
+                _context.Gears.Add(gearData);
                 await _context.SaveChangesAsync();
 
                 // TODO: Add insert logic here
@@ -124,13 +135,17 @@ namespace PackBuddy.Controllers
             var viewModel = new GearFormViewModel()
             {
                 Name = gear.Name,
-                ImagePath = gear.ImagePath,
                 Condtion = gear.Condtion,
                 Description = gear.Description,
                 GearTypeId = gear.GearTypeId,
                 Rating = gear.Rating,
-                GearTypeOptions = gearOptions
+                GearTypeOptions = gearOptions,
             };
+            if (gear.ImagePath != null)
+            {
+                   
+            }
+    
             return View(viewModel);
         }
 
@@ -151,8 +166,18 @@ namespace PackBuddy.Controllers
                     Description = gearFormView.Description,
                     Rating = gearFormView.Rating,
                     GearTypeId = gearFormView.GearTypeId,
-                    ImagePath = gearFormView.ImagePath
                 };
+                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images");
+                if (gearFormView.ImagePath != null)
+                {
+                    var fileName = Guid.NewGuid().ToString() + gearFormView.ImagePath.FileName;
+                    gearData.ImagePath = fileName;
+                    using (var fileStream = new FileStream(Path.Combine(uploadPath, fileName), FileMode.Create))
+                    {
+                        await gearFormView.ImagePath.CopyToAsync(fileStream);
+                    }
+                }
+
                 _context.Gears.Update(gearData);
                 await _context.SaveChangesAsync();
                 // TODO: Add update logic here

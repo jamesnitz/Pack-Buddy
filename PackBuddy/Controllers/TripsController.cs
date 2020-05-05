@@ -31,6 +31,8 @@ namespace PackBuddy.Controllers
                .Include(t => t.GearTrips)
                    .ThenInclude(t => t.Gear)
                .ToListAsync();
+            usersTrips.Sort((t1, t2) => DateTime.Compare(t1.EndDate, t2.EndDate));
+            usersTrips.Reverse();
             return View(usersTrips);
         }
 
