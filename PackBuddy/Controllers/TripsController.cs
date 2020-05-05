@@ -37,9 +37,14 @@ namespace PackBuddy.Controllers
         }
 
         // GET: Trips/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var foundTrip = await _context.Trips
+                .Include(t => t.GearTrips)
+                    .ThenInclude(t => t.Gear)
+                .FirstOrDefaultAsync(t => t.Id == id);
+
+            return View(foundTrip);
         }
 
         // GET: Trips/Create
