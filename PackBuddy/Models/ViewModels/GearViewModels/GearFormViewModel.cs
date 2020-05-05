@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,7 +21,7 @@ namespace PackBuddy.Models.ViewModels.GearViewModels
         public int Rating { get; set; }
         [Required]
         public string Condtion { get; set; }
-        public string ImagePath { get; set; }
+        public IFormFile ImagePath { get; set; }
 
         public List<SelectListItem> GearTypeOptions { get; set; }
     }
