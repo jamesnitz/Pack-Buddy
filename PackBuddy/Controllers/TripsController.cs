@@ -37,9 +37,14 @@ namespace PackBuddy.Controllers
         }
 
         // GET: Trips/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var foundTrip = await _context.Trips
+                .Include(t => t.GearTrips)
+                    .ThenInclude(t => t.Gear)
+                .FirstOrDefaultAsync(t => t.Id == id);
+
+            return View(foundTrip);
         }
 
         // GET: Trips/Create
@@ -71,23 +76,31 @@ namespace PackBuddy.Controllers
         }
 
         // GET: Trips/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var foundTrip = await _context.Trips
+             .Include(t => t.GearTrips)
+                 .ThenInclude(t => t.Gear)
+             .FirstOrDefaultAsync(t => t.Id == id);
+            return View(foundTrip);
         }
 
         // POST: Trips/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, Trip trip)
         {
             try
             {
-                // TODO: Add update logic here
+                var user = await GetCurrentUserAsync();
+                trip.ApplicationuserId = user.Id;
+                 _context.Trips.Update(trip);
+                await _context.SaveChangesAsync();
+               
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }

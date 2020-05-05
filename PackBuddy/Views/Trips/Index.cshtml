@@ -17,6 +17,7 @@
             <div class="card-body">
                 <img src="~/images/trip_forest.png" />
                 <h6 class="card-title">@Html.DisplayFor(modelItem => item.StartDate) - @Html.DisplayFor(modelItem => item.EndDate) </h6>
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
 
             </div>
         </div>
