@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PackBuddy.Data;
 using PackBuddy.Models;
+using PackBuddy.Models.ViewModels.GearTripViewModels;
 
 namespace PackBuddy.Controllers
 {
@@ -33,9 +35,20 @@ namespace PackBuddy.Controllers
         }
 
         // GET: GearTrips/Create
-        public ActionResult Create(int tripId)
+        public async Task<ActionResult> Create(int tripId)
         {
-            return View();
+            var user = await GetCurrentUserAsync();
+            var trip = await _context.Trips.FirstOrDefaultAsync(t => t.Id == tripId);
+            var usersGear = await _context.Gears.Where(g => g.ApplicationuserId == user.Id)
+               .Include(g => g.GearType)
+               .ToListAsync();
+            var viewModel = new AddGearTripViewModel()
+            {
+                Trip = trip,
+                Gears = usersGear,
+                ApplicationUser = user
+            };
+            return View(viewModel);
         }
 
         // POST: GearTrips/Create
@@ -45,6 +58,7 @@ namespace PackBuddy.Controllers
         {
             try
             {
+
                 // TODO: Add insert logic here
 
                 return RedirectToAction(nameof(Index));

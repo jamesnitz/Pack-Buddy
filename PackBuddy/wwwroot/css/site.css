@@ -78,7 +78,12 @@ body {
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
+.gearTrip_GearCardList {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
 
-.homeButtons{
-   text-align: center;
+.homeButtons {
+    text-align: center;
 }
