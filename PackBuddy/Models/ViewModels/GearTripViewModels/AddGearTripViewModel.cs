@@ -11,6 +11,8 @@ namespace PackBuddy.Models.ViewModels.GearTripViewModels
         public string ApplicationuserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public List<Gear> Gears { get; set; }
+        public List<Gear> AddedGears { get; set; }
+
         public Trip Trip { get; set; }
     }
 }

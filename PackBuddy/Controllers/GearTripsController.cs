@@ -46,7 +46,7 @@ namespace PackBuddy.Controllers
             {
                 Trip = trip,
                 Gears = usersGear,
-                ApplicationUser = user
+                ApplicationUser = user,
             };
             return View(viewModel);
         }
@@ -54,37 +54,55 @@ namespace PackBuddy.Controllers
         // POST: GearTrips/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(AddGearTripViewModel viewModel)
         {
             try
             {
-
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
+                foreach (var gear in viewModel.Gears)
+                {
+                    AddSingleGearTrip(viewModel.Trip.Id, gear.Id);
+                }
+                // TODO: Add update logic here
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Trips");
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
         }
 
         // GET: GearTrips/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int tripId)
         {
-            return View();
+            var user = await GetCurrentUserAsync();
+            var trip = await _context.Trips.FirstOrDefaultAsync(t => t.Id == tripId);
+            var usersGear = await _context.Gears.Where(g => g.ApplicationuserId == user.Id)
+               .Include(g => g.GearType)
+               .ToListAsync();
+            var viewModel = new AddGearTripViewModel()
+            {
+                Trip = trip,
+                Gears = usersGear,
+                ApplicationUser = user
+            };
+            return View(viewModel);
         }
 
         // POST: GearTrips/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(AddGearTripViewModel viewModel)
         {
             try
             {
+                foreach(var gear in viewModel.Gears)
+                {
+                    AddSingleGearTrip(viewModel.Trip.Id, gear.Id);
+                }
                 // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Trips");
             }
             catch
             {
@@ -113,6 +131,16 @@ namespace PackBuddy.Controllers
             {
                 return View();
             }
+        }
+        private void AddSingleGearTrip(int tripId, int gearId)
+        {
+            var gearTripData = new GearTrip()
+            {
+                GearId = gearId,
+                TripId = tripId
+            };
+            _context.GearTrips.Add(gearTripData);
+
         }
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
     }
