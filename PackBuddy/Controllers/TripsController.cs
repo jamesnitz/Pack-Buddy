@@ -67,14 +67,17 @@ namespace PackBuddy.Controllers
 
                 // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(TripCreated));
             }
             catch(Exception ex)
             {
                 return View();
             }
         }
-
+        public ActionResult TripCreated()
+        {
+            return View();
+        }
         // GET: Trips/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
