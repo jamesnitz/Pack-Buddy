@@ -24,8 +24,7 @@
                     <p class="card-text">
                         @Html.DisplayFor(modelItem => item.Description)
                     </p>
-                    <form asp-controller="GearTrips" asp-action="j" method="post" asp-route-Id="@item.Id, @item.GearTrips">
-                  
+                    <form asp-controller="GearTrips" asp-action="RemoveFromTrip" asp-route-comboId="@item.Id, @Model.Trip.Id" method="post">
                         <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove" />
                     </form>
                 </div>

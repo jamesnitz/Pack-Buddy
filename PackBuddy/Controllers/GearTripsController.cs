@@ -181,6 +181,19 @@ namespace PackBuddy.Controllers
                 return View();
             }
         }
+        [HttpPost]  
+        public async Task<ActionResult> RemoveFromTrip(string comboId)
+        {
+            var list = comboId.Split(",");
+            int gearId = Int32.Parse(list[0]);
+            int tripId = Int32.Parse(list[1]);
+            var gearTrip = await _context.GearTrips.Where(gt => gt.TripId == tripId).FirstOrDefaultAsync(gt => gt.GearId == gearId);
+
+            _context.GearTrips.Remove(gearTrip);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Edit", "GearTrips", new { tripId = tripId });
+        }
+
         [HttpPost]
         public async Task<ActionResult> AddToTrip(string comboId)
            {
@@ -193,7 +206,7 @@ namespace PackBuddy.Controllers
                 GearId = gearId,
                 TripId = tripId
             };
-            _context.Add(gearTripData);
+            _context.GearTrips.Add(gearTripData);
             await _context.SaveChangesAsync();
             return RedirectToAction("Edit", "GearTrips", new { tripId = tripId });
         }
