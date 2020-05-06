@@ -122,7 +122,8 @@ namespace PackBuddy.Controllers
             {
                 var newGear = new GearViewModel()
                 {
-                    Gear = gear
+                    Gear = gear,
+                    TripId = tripId
                 };
                 addedGears.Add(newGear);
             }
@@ -138,25 +139,25 @@ namespace PackBuddy.Controllers
         }
         //***************************UNNECCESSARY
         // POST: GearTrips/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(AddGearTripViewModel viewModel)
-        {
-            try
-            {
-                foreach(var gear in viewModel.Gears)
-                {
-                    AddSingleGearTrip(viewModel.Trip.Id, gear.Id);
-                }
-                // TODO: Add update logic here
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Trips");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Edit(AddGearTripViewModel viewModel)
+        //{
+        //    try
+        //    {
+        //        foreach(var gear in viewModel.Gears)
+        //        {
+        //            AddSingleGearTrip(viewModel.Trip.Id, gear.Id);
+        //        }
+        //        // TODO: Add update logic here
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction("Index", "Trips");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         // GET: GearTrips/Delete/5
         public ActionResult Delete(int id)
@@ -179,6 +180,22 @@ namespace PackBuddy.Controllers
             {
                 return View();
             }
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddToTrip(string comboId)
+           {
+            var list = comboId.Split(",");
+            int gearId = Int32.Parse(list[0]);
+            int tripId = Int32.Parse(list[1]);
+
+            var gearTripData = new GearTrip()
+            {
+                GearId = gearId,
+                TripId = tripId
+            };
+            _context.Add(gearTripData);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Edit", "GearTrips", new { tripId = tripId });
         }
         private void AddSingleGearTrip(int tripId, int gearId)
         {

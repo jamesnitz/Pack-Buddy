@@ -9,5 +9,6 @@ namespace PackBuddy.Models.ViewModels.GearViewModels
     {
         public Gear Gear { get; set; }
         public bool SelectedGear { get; set; }
+        public int TripId { get; set; }
     }
 }
