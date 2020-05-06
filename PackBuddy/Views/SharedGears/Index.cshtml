@@ -2,6 +2,14 @@
 @{
     ViewData["Title"] = "Index";
 }
+@if (TempData.ContainsKey("requestCreated"))
+{
+    <div class="alert alert-success">
+        @TempData["requestCreated"]
+        @Html.ActionLink("Send a message?", "Edit", "SharedGears", new { gearId = TempData["gearId"] })
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    </div>
+}
 
 <h1>Index</h1>
 <form class="form-inline my-2 my-lg-0" asp-controller="SharedGears" asp-action="Index">
@@ -42,9 +50,8 @@
                                     <p>@Html.DisplayFor(modelItem => item.Description)</p>
                                 </div>
                                 <div>
-                                    <button class="btn btn-outline-success badge-success border-success">@Html.ActionLink("Edit", "Edit", new { id = item.Id }) </button>
-                                    <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@item.Id">
-                                        <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove Item" />
+                                    <form asp-controller="SharedGears" asp-route-gearId="@item.Id" asp-action="Create">
+                                        <input type="submit" class="btn btn-success bg-success border-success" value="Request it" />
                                     </form>
                                 </div>
 

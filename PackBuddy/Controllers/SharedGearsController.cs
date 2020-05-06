@@ -54,22 +54,30 @@ namespace PackBuddy.Controllers
             return View();
         }
 
-        // GET: SharedGears/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+
 
         // POST: SharedGears/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(int gearId)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
+                var user = await GetCurrentUserAsync();
+                var request = new SharedGear()
+                {
+                    ApplicationuserId = user.Id,
+                    GearId = gearId,
+                    AcceptedRequest = false
+                };
+                var requestedGear = await _context.Gears
+                    .Include(g => g.ApplicationUser)
+                    .FirstOrDefaultAsync(g => g.Id == gearId);
+                _context.SharedGears.Add(request);
+                await _context.SaveChangesAsync();
+            TempData["requestCreated"] = "Your Request has been sent.";
+            TempData["gearId"] = gearId;
+            return RedirectToAction("Index", "SharedGears", new { searchString = requestedGear.ApplicationUser.Email});
             }
             catch
             {
@@ -122,5 +130,7 @@ namespace PackBuddy.Controllers
                 return View();
             }
         }
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
     }
 }
