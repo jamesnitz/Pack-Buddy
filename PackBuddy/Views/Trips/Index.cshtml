@@ -3,7 +3,14 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+@if (TempData.ContainsKey("tripCreated"))
+{
+    <div class="alert alert-success">
+        @TempData["tripCreated"]
+        @Html.ActionLink("Start Packing", "Create", "GearTrips", new { tripId = TempData["tripId"] })
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    </div>
+}
 <h1>Index</h1>
 
 <p>

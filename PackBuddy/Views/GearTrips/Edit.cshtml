@@ -1,0 +1,40 @@
+﻿@model PackBuddy.Models.ViewModels.GearTripViewModels.AddGearTripViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>AddGearTripViewModel</h4>
+<h1>Edit</h1>
+
+<h4>GearTrip</h4>
+<hr />
+<form asp-action="Edit">
+    <div class="gearTrip_GearCardList">
+        @foreach (var item in Model.Gears)
+        {
+            <div class="card border-primary mb-3" style="max-width: 9rem;">
+                <div class="card-header">@Html.DisplayFor(modelItem => item.Name)</div>
+                <div class="card-body">
+                    <h6 class="card-title">@Html.DisplayFor(modelItem => item.GearType.Label)</h6>
+                    @if (item.ImagePath != null)
+                    {
+                        <img style="max-height: 50px; max-width: 2rem" src="~/images/@item.ImagePath" alt="gearItem picture" />
+                    }
+                    else
+                    {
+                        <img style="max-height: 50px; max-width: 2rem" src="~/images/@item.GearType.ImagePath" alt="gearType picture" />
+                    }
+                    <p class="card-text">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </p>
+                </div>
+            </div>
+        }
+    </div>
+</form>
+<div>
+    <a asp-controller="Trips" asp-action="Index">Back to List</a>
+</div>
