@@ -68,6 +68,7 @@ namespace PackBuddy.Controllers
                 {
                     ApplicationuserId = user.Id,
                     GearId = gearId,
+                    RequestMessage = null,
                     AcceptedRequest = false
                 };
                 var requestedGear = await _context.Gears
@@ -75,8 +76,9 @@ namespace PackBuddy.Controllers
                     .FirstOrDefaultAsync(g => g.Id == gearId);
                 _context.SharedGears.Add(request);
                 await _context.SaveChangesAsync();
+                var sharedGear = await _context.SharedGears.FirstOrDefaultAsync(g => g.GearId == gearId && g.ApplicationuserId == user.Id && g.RequestMessage == null);
             TempData["requestCreated"] = "Your Request has been sent.";
-            TempData["gearId"] = gearId;
+            TempData["gearId"] = sharedGear.Id;
             return RedirectToAction("Index", "SharedGears", new { searchString = requestedGear.ApplicationUser.Email});
             }
             catch
@@ -86,18 +88,21 @@ namespace PackBuddy.Controllers
         }
 
         // GET: SharedGears/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var sharedGear = await _context.SharedGears.FirstOrDefaultAsync(s => s.Id == id);
+            return View(sharedGear);
         }
 
         // POST: SharedGears/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, SharedGear sharedGear)
         {
             try
             {
+                _context.Update(sharedGear);
+                await _context.SaveChangesAsync();
                 // TODO: Add update logic here
 
                 return RedirectToAction(nameof(Index));

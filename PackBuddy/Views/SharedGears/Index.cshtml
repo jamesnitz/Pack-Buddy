@@ -6,7 +6,7 @@
 {
     <div class="alert alert-success">
         @TempData["requestCreated"]
-        @Html.ActionLink("Send a message?", "Edit", "SharedGears", new { gearId = TempData["gearId"] })
+        @Html.ActionLink("Send a message?", "Edit", "SharedGears", new { id = TempData["gearId"] })
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     </div>
 }
