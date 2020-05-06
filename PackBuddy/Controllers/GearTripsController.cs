@@ -137,27 +137,7 @@ namespace PackBuddy.Controllers
             };
             return View(viewModel);
         }
-        //***************************UNNECCESSARY
-        // POST: GearTrips/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Edit(AddGearTripViewModel viewModel)
-        //{
-        //    try
-        //    {
-        //        foreach(var gear in viewModel.Gears)
-        //        {
-        //            AddSingleGearTrip(viewModel.Trip.Id, gear.Id);
-        //        }
-        //        // TODO: Add update logic here
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction("Index", "Trips");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+      
 
         // GET: GearTrips/Delete/5
         public ActionResult Delete(int id)
