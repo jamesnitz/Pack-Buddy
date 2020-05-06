@@ -102,36 +102,62 @@ namespace PackBuddy.Controllers
             var trip = await _context.Trips.FirstOrDefaultAsync(t => t.Id == tripId);
             var usersGear = await _context.Gears.Where(g => g.ApplicationuserId == user.Id)
                .Include(g => g.GearType)
+               .Include(g => g.GearTrips)
+                    .ThenInclude(g => g.Trip)
                .ToListAsync();
-            var viewModel = new AddGearTripViewModel()
+
+            var SelectedGear = new List<Gear>();
+            foreach(var item in usersGear)
+            {
+                foreach(var gt in item.GearTrips)
+                {
+                    if (gt.TripId == tripId)
+                    {
+                        SelectedGear.Add(item);
+                    }
+                }
+            }
+            var addedGears = new List<GearViewModel>();
+            foreach (var gear in usersGear)
+            {
+                var newGear = new GearViewModel()
+                {
+                    Gear = gear,
+                    TripId = tripId
+                };
+                addedGears.Add(newGear);
+            }
+
+            var viewModel = new EditGearTripViewModel()
             {
                 Trip = trip,
-                Gears = usersGear,
+                AddedGears = addedGears,
+                AlreadySelected = SelectedGear,
                 ApplicationUser = user
             };
             return View(viewModel);
         }
-
+        //***************************UNNECCESSARY
         // POST: GearTrips/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(AddGearTripViewModel viewModel)
-        {
-            try
-            {
-                foreach(var gear in viewModel.Gears)
-                {
-                    AddSingleGearTrip(viewModel.Trip.Id, gear.Id);
-                }
-                // TODO: Add update logic here
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Trips");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Edit(AddGearTripViewModel viewModel)
+        //{
+        //    try
+        //    {
+        //        foreach(var gear in viewModel.Gears)
+        //        {
+        //            AddSingleGearTrip(viewModel.Trip.Id, gear.Id);
+        //        }
+        //        // TODO: Add update logic here
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction("Index", "Trips");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         // GET: GearTrips/Delete/5
         public ActionResult Delete(int id)
@@ -154,6 +180,35 @@ namespace PackBuddy.Controllers
             {
                 return View();
             }
+        }
+        [HttpPost]  
+        public async Task<ActionResult> RemoveFromTrip(string comboId)
+        {
+            var list = comboId.Split(",");
+            int gearId = Int32.Parse(list[0]);
+            int tripId = Int32.Parse(list[1]);
+            var gearTrip = await _context.GearTrips.Where(gt => gt.TripId == tripId).FirstOrDefaultAsync(gt => gt.GearId == gearId);
+
+            _context.GearTrips.Remove(gearTrip);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Edit", "GearTrips", new { tripId = tripId });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddToTrip(string comboId)
+           {
+            var list = comboId.Split(",");
+            int gearId = Int32.Parse(list[0]);
+            int tripId = Int32.Parse(list[1]);
+
+            var gearTripData = new GearTrip()
+            {
+                GearId = gearId,
+                TripId = tripId
+            };
+            _context.GearTrips.Add(gearTripData);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Edit", "GearTrips", new { tripId = tripId });
         }
         private void AddSingleGearTrip(int tripId, int gearId)
         {
