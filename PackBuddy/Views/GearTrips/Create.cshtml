@@ -4,34 +4,35 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Start</h1>
 
-<h4>GearTrip</h4>
+<h4>Packing!</h4>
 <hr />
 <form asp-action="Create">
     <div class="gearTrip_GearCardList">
-        @foreach (var item in Model.Gears)
+        @for (var i = 0; i < Model.AddedGears.Count; i++)
         {
-            <div class="card border-primary mb-3" style="max-width: 9rem;">
-                <div class="card-header">@Html.DisplayFor(modelItem => item.Name)</div>
-                <div class="card-body">
-                    <h6 class="card-title">@Html.DisplayFor(modelItem => item.GearType.Label)</h6>
-                    @if (item.ImagePath != null)
-                    {
-                        <img style="max-height: 50px; max-width: 2rem" src="~/images/@item.ImagePath" alt="gearItem picture" />
-                    }
-                    else
-                    {
-                        <img style="max-height: 50px; max-width: 2rem" src="~/images/@item.GearType.ImagePath" alt="gearType picture" />
-                    }
-                    <p class="card-text">
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </p>
-                </div>
-                <input type="checkbox" id="@item.Id" class="form-control" value="true">
-            
-
+        <div class="card border-primary mb-3" style="max-width: 9rem;">
+            <div class="card-header">@Html.DisplayFor(modelItem => Model.AddedGears[i].Gear.Name)</div>
+            <div class="card-body">
+                <h6 class="card-title">@Html.DisplayFor(modelItem => Model.AddedGears[i].Gear.GearType.Label)</h6>
+                @if (Model.AddedGears[i].Gear.ImagePath != null)
+                {
+                    <img style="max-height: 50px; max-width: 2rem" src="~/images/@Model.AddedGears[i].Gear.ImagePath" alt="gearItem picture" />
+                }
+                else
+                {
+                    <img style="max-height: 50px; max-width: 2rem" src="~/images/@Model.AddedGears[i].Gear.GearType.ImagePath" alt="gearType picture" />
+                }
+               
             </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="@Model.Trip.Id" />
+                <input type="hidden" asp-for="@Model.AddedGears[i].Gear.Id" />
+                <label asp-for="@Model.AddedGears[i].SelectedGear">Pack it?</label><br>
+                <input asp-for="@Model.AddedGears[i].SelectedGear" type="checkbox" class="form-control" value="true">
+            </div>
+        </div>
         }
     </div>
     <div class="form-group">

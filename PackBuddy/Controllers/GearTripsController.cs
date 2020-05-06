@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using PackBuddy.Data;
 using PackBuddy.Models;
 using PackBuddy.Models.ViewModels.GearTripViewModels;
+using PackBuddy.Models.ViewModels.GearViewModels;
 
 namespace PackBuddy.Controllers
 {
@@ -42,11 +43,23 @@ namespace PackBuddy.Controllers
             var usersGear = await _context.Gears.Where(g => g.ApplicationuserId == user.Id)
                .Include(g => g.GearType)
                .ToListAsync();
+            var addedGears = new List<GearViewModel>();
+            foreach(var gear in usersGear)
+            {
+                var newGear = new GearViewModel()
+                {
+                    Gear = gear
+                };
+                addedGears.Add(newGear);
+            }
+            
+            
             var viewModel = new AddGearTripViewModel()
             {
                 Trip = trip,
                 Gears = usersGear,
                 ApplicationUser = user,
+                AddedGears = addedGears
             };
             return View(viewModel);
         }
@@ -58,9 +71,19 @@ namespace PackBuddy.Controllers
         {
             try
             {
-                foreach (var gear in viewModel.Gears)
+                var gearsToAdd = new List<GearViewModel>();
+                foreach(var gear in viewModel.AddedGears)
                 {
-                    AddSingleGearTrip(viewModel.Trip.Id, gear.Id);
+                    if (gear.SelectedGear == true)
+                    {
+                        gearsToAdd.Add(gear);
+                    }
+                }
+
+
+                foreach (var gear in gearsToAdd)
+                {
+                    AddSingleGearTrip(viewModel.Trip.Id, gear.Gear.Id);
                 }
                 // TODO: Add update logic here
                 await _context.SaveChangesAsync();

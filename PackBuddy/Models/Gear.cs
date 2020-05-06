@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,7 +21,6 @@ namespace PackBuddy.Models
         [Required]
         public string Condtion { get; set; }
         public string ImagePath { get; set; }
-
         [Required]
         public string ApplicationuserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
