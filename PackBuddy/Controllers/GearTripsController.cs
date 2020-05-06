@@ -102,16 +102,41 @@ namespace PackBuddy.Controllers
             var trip = await _context.Trips.FirstOrDefaultAsync(t => t.Id == tripId);
             var usersGear = await _context.Gears.Where(g => g.ApplicationuserId == user.Id)
                .Include(g => g.GearType)
+               .Include(g => g.GearTrips)
+                    .ThenInclude(g => g.Trip)
                .ToListAsync();
-            var viewModel = new AddGearTripViewModel()
+
+            var SelectedGear = new List<Gear>();
+            foreach(var item in usersGear)
+            {
+                foreach(var gt in item.GearTrips)
+                {
+                    if (gt.TripId == tripId)
+                    {
+                        SelectedGear.Add(item);
+                    }
+                }
+            }
+            var addedGears = new List<GearViewModel>();
+            foreach (var gear in usersGear)
+            {
+                var newGear = new GearViewModel()
+                {
+                    Gear = gear
+                };
+                addedGears.Add(newGear);
+            }
+
+            var viewModel = new EditGearTripViewModel()
             {
                 Trip = trip,
-                Gears = usersGear,
+                AddedGears = addedGears,
+                AlreadySelected = SelectedGear,
                 ApplicationUser = user
             };
             return View(viewModel);
         }
-
+        //***************************UNNECCESSARY
         // POST: GearTrips/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]

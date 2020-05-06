@@ -1,19 +1,13 @@
-﻿@model PackBuddy.Models.ViewModels.GearTripViewModels.AddGearTripViewModel
+﻿@model PackBuddy.Models.ViewModels.GearTripViewModels.EditGearTripViewModel
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>AddGearTripViewModel</h4>
-<h1>Edit</h1>
-
-<h4>GearTrip</h4>
+<h4>Currently Packed</h4>
 <hr />
-<form asp-action="Edit">
     <div class="gearTrip_GearCardList">
-        @foreach (var item in Model.Gears)
+        @foreach (var item in Model.AlreadySelected)
         {
             <div class="card border-primary mb-3" style="max-width: 9rem;">
                 <div class="card-header">@Html.DisplayFor(modelItem => item.Name)</div>
@@ -30,11 +24,42 @@
                     <p class="card-text">
                         @Html.DisplayFor(modelItem => item.Description)
                     </p>
+                    <form asp-controller="GearTrips" asp-action="Delete" method="post" asp-route-Id="@item.Id">
+                        <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove" />
+                    </form>
                 </div>
             </div>
         }
     </div>
-</form>
+
+    @* TO ADD / Remove *@
+    <h4>My Gear</h4>
+    <hr />
+    <div class="gearTrip_GearCardList">
+        @foreach (var item in Model.AddedGears)
+        {
+            <div class="card border-primary mb-3" style="max-width: 9rem;">
+                <div class="card-header">@Html.DisplayFor(modelItem => item.Gear.Name)</div>
+                <div class="card-body">
+                    <h6 class="card-title">@Html.DisplayFor(modelItem => item.Gear.GearType.Label)</h6>
+                    @if (item.Gear.ImagePath != null)
+                    {
+                        <img style="max-height: 50px; max-width: 2rem" src="~/images/@item.Gear.ImagePath" alt="gearItem picture" />
+                    }
+                    else
+                    {
+                        <img style="max-height: 50px; max-width: 2rem" src="~/images/@item.Gear.GearType.ImagePath" alt="gearType picture" />
+                    }
+                    <p class="card-text">
+                        @Html.DisplayFor(modelItem => item.Gear.Description)
+                    </p>
+                    <form asp-controller="GearTrips" asp-action="Add" method="post" asp-route-Id="@item.Gear.Id">
+                        <input type="submit" class="btn btn-success bg-success border-success" value="Add" />
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
 <div>
     <a asp-controller="Trips" asp-action="Index">Back to List</a>
 </div>
