@@ -46,7 +46,11 @@ namespace PackBuddy.Controllers
                 ViewBag.nothingFound = true;
 
             }
-            var requestsRecieved = await _context.SharedGears.Where(g => g.Gear.ApplicationuserId == user.Id).ToListAsync();
+
+            var requestsRecieved = await _context.SharedGears
+                .Include(g => g.Gear)
+                .Include(g => g.ApplicationUser)
+                .Where(g => g.Gear.ApplicationuserId == user.Id).ToListAsync();
             viewModel.RequestsReceived = requestsRecieved;
             return View(viewModel);
         }
@@ -74,6 +78,7 @@ namespace PackBuddy.Controllers
                     RequestMessage = null,
                     AcceptedRequest = false
                 };
+
                 var requestedGear = await _context.Gears
                     .Include(g => g.ApplicationUser)
                     .FirstOrDefaultAsync(g => g.Id == gearId);

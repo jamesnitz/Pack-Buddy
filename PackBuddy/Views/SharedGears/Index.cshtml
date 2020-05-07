@@ -22,20 +22,49 @@
 <h1>Index</h1>
 <div class="sharedGearHeader">
 
-<form class="form-inline my-2 my-lg-0" asp-controller="SharedGears" asp-action="Index">
-    <input class="form-control mr-sm-2" type="text" name="searchString" placeholder="Search For friends">
-    <button hidden class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Search</button>
-</form>
+    <form class="form-inline my-2 my-lg-0" asp-controller="SharedGears" asp-action="Index">
+        <input class="form-control mr-sm-2" type="text" name="searchString" placeholder="Search For friends">
+        <button hidden class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Search</button>
+    </form>
     <div class="card w-25">
         <div class="card-body">
             <h5 class="card-title">Notifications</h5>
             <div>
-            <span class="badge badge-pill badge-primary">@Model.RequestsReceived.Count</span>
-            <p class="card-text">@(Model.RequestsReceived.Count == 1 ? "Notification": "Notifications")</p>
+                <span class="badge badge-pill badge-primary">@Model.RequestsReceived.Count</span>
+                <p class="card-text">@(Model.RequestsReceived.Count == 1 ? "Notification": "Notifications")</p>
+                @* MODAL START *@
+                @foreach (var request in Model.RequestsReceived)
+                {
+                    <button class="btn btn-info" data-target="#notifications " data-toggle="modal">View More</button>
+                    <div class="modal" id="notifications" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Notifications</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>@request.ApplicationUser.FirstName @request.ApplicationUser.LastName has requested: @request.Gear.Name</p>
+                                    <p>@request.RequestMessage</p>
+                                </div>
+                                <div>
+                                    <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@request.Id">
+                                        <input type="submit" class="btn btn-success bg-success border-success" value="Accept" />
+                                    </form>
+                                    <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@request.Id">
+                                        <input type="submit" class="btn btn-danger bg-danger border-danger" value="Deny" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @* MODAL END *@
             </div>
         </div>
     </div>
 </div>
+
 @if (ViewBag.nothingFound != true)
 {
     <div class="gearCardList">
