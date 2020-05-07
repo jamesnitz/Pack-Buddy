@@ -28,6 +28,7 @@ namespace PackBuddy.Controllers
         // GET: SharedGears
         public async Task<ActionResult> Index(string searchString)
         {
+            var user = await GetCurrentUserAsync();
             var gears = new List<Gear>();
             if (searchString != null)
             {
@@ -45,6 +46,14 @@ namespace PackBuddy.Controllers
                 ViewBag.nothingFound = true;
 
             }
+
+            var requestsRecieved = await _context.SharedGears
+                .Include(g => g.Gear)
+                .Include(g => g.ApplicationUser)
+                .Where(g => g.Gear.ApplicationuserId == user.Id)
+                .Where(g => g.AcceptedRequest == false)
+                .ToListAsync();
+            viewModel.RequestsReceived = requestsRecieved;
             return View(viewModel);
         }
 
@@ -71,6 +80,7 @@ namespace PackBuddy.Controllers
                     RequestMessage = null,
                     AcceptedRequest = false
                 };
+
                 var requestedGear = await _context.Gears
                     .Include(g => g.ApplicationUser)
                     .FirstOrDefaultAsync(g => g.Id == gearId);
@@ -103,8 +113,8 @@ namespace PackBuddy.Controllers
             {
                 _context.Update(sharedGear);
                 await _context.SaveChangesAsync();
-                // TODO: Add update logic here
 
+                TempData["messageSent"] = "Your message has been sent.";
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -112,25 +122,40 @@ namespace PackBuddy.Controllers
                 return View();
             }
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AcceptRequest(int requestId)
+            {
+            try
+            {
+                var foundGear = await _context.SharedGears.FirstOrDefaultAsync(s => s.Id == requestId);
+                foundGear.AcceptedRequest = true;
+                _context.SharedGears.Update(foundGear);
+                await _context.SaveChangesAsync();
 
-        // GET: SharedGears/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+                return RedirectToAction(nameof(Index));
+
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
         }
-
         // POST: SharedGears/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int requestId)
         {
             try
             {
-                // TODO: Add delete logic here
+                var foundGear = await _context.SharedGears.FirstOrDefaultAsync(s => s.Id == requestId);
+                _context.SharedGears.Remove(foundGear);
+                await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
+               
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
