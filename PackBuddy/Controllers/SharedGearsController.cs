@@ -120,27 +120,40 @@ namespace PackBuddy.Controllers
                 return View();
             }
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async void AcceptRequest(int requestId)
+            {
+            try
+            {
+                var foundGear = await _context.SharedGears.FirstOrDefaultAsync(s => s.Id == requestId);
+                foundGear.AcceptedRequest = true;
+                _context.SharedGears.Update(foundGear);
+                await _context.SaveChangesAsync();
 
-        // GET: SharedGears/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
-
         // POST: SharedGears/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async void Delete(int requestId)
         {
             try
             {
-                // TODO: Add delete logic here
+                var foundGear = await _context.SharedGears.FirstOrDefaultAsync(s => s.Id == requestId);
+                _context.SharedGears.Remove(foundGear);
+                await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+               
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+               
             }
         }
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);

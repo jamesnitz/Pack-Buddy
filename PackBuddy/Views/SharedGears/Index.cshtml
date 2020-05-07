@@ -48,10 +48,10 @@
                                     <p>@request.RequestMessage</p>
                                 </div>
                                 <div>
-                                    <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@request.Id">
+                                    <form asp-controller="SharedGears" asp-action="AcceptRequest" method="post" asp-route-requestId="@request.Id">
                                         <input type="submit" class="btn btn-success bg-success border-success" value="Accept" />
                                     </form>
-                                    <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@request.Id">
+                                    <form asp-controller="SharedGears" asp-action="Delete" method="post" asp-route-requestId="@request.Id">
                                         <input type="submit" class="btn btn-danger bg-danger border-danger" value="Deny" />
                                     </form>
                                 </div>
