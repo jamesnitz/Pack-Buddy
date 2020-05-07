@@ -50,7 +50,9 @@ namespace PackBuddy.Controllers
             var requestsRecieved = await _context.SharedGears
                 .Include(g => g.Gear)
                 .Include(g => g.ApplicationUser)
-                .Where(g => g.Gear.ApplicationuserId == user.Id).ToListAsync();
+                .Where(g => g.Gear.ApplicationuserId == user.Id)
+                .Where(g => g.AcceptedRequest == false)
+                .ToListAsync();
             viewModel.RequestsReceived = requestsRecieved;
             return View(viewModel);
         }
