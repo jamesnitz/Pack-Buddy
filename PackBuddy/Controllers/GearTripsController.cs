@@ -24,16 +24,16 @@ namespace PackBuddy.Controllers
             _context = context;
         }
         // GET: GearTrips
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
 
-        // GET: GearTrips/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        //// GET: GearTrips/Details/5
+        //public ActionResult Details(int id)
+        //{
+        //    return View();
+        //}
 
         // GET: GearTrips/Create
         public async Task<ActionResult> Create(int tripId)
@@ -52,8 +52,21 @@ namespace PackBuddy.Controllers
                 };
                 addedGears.Add(newGear);
             }
-            
-            
+            var sharedGear = await _context.SharedGears
+                .Include(s => s.Gear)
+                .Include(s => s.Gear.GearType)
+                .Where(s => s.AcceptedRequest == true)
+                .Where(s => s.ApplicationuserId == user.Id)
+                .ToListAsync();
+            foreach (var gear in sharedGear)
+            {
+                var gearModel = new GearViewModel()
+                {
+                    Gear = gear.Gear
+                };
+                addedGears.Add(gearModel);
+            }
+
             var viewModel = new AddGearTripViewModel()
             {
                 Trip = trip,
@@ -126,6 +139,31 @@ namespace PackBuddy.Controllers
                     TripId = tripId
                 };
                 addedGears.Add(newGear);
+            }
+            var sharedGear = await _context.SharedGears
+               .Include(s => s.Gear)
+               .Include(s => s.Gear.GearType)
+               .Include(s => s.Gear.GearTrips)
+                    .ThenInclude(s => s.Trip)
+               .Where(s => s.AcceptedRequest == true)
+               .Where(s => s.ApplicationuserId == user.Id)
+               .ToListAsync();
+            foreach (var gear in sharedGear)
+            {
+                    
+                var gearModel = new GearViewModel()
+                {
+                    Gear = gear.Gear,
+                    TripId = tripId    
+                };
+                addedGears.Add(gearModel);
+                foreach(var item in gear.Gear.GearTrips)
+                {
+                    if (item.TripId == tripId)
+                    {
+                        SelectedGear.Add(gear.Gear);
+                    }
+                }
             }
 
             var viewModel = new EditGearTripViewModel()

@@ -1,72 +1,88 @@
 ﻿@model IEnumerable<PackBuddy.Models.Gear>
-
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "Index";
 }
-
+@{
+    var currentUser = await UserManager.GetUserAsync(User);
+}
 <h1>Index</h1>
 <div>
-<form class="form-inline my-2 my-lg-0" asp-controller="Gears" asp-action="Index">
-    <input class="form-control mr-sm-2" type="text" name="searchString" placeholder="Search For Products">
-    <button hidden class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Search</button>
-</form>
-<form class="form-inline my-2 my-lg-0" asp-controller="Gears" asp-action="Index">
-    <select class="form-control" name="filter" asp-items="@ViewBag.ProductTypes">
-        <option selected value="0" disabled>All Gear</option>
-    </select>
-    <button  class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Search</button>
-</form>
+    <form class="form-inline my-2 my-lg-0" asp-controller="Gears" asp-action="Index">
+        <input class="form-control mr-sm-2" type="text" name="searchString" placeholder="Search For Products">
+        <button hidden class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Search</button>
+    </form>
+    <form class="form-inline my-2 my-lg-0" asp-controller="Gears" asp-action="Index">
+        <select class="form-control" name="filter" asp-items="@ViewBag.ProductTypes">
+            <option selected value="0" disabled>All Gear</option>
+        </select>
+        <button class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Search</button>
+    </form>
 </div>
+<a type="button" class="btn btn-success btn-sm" asp-action="Index" asp-route-borrow="true">Borrowed Gear</a>
+<a type="button" class="btn btn-success btn-sm" asp-action="Index" asp-route-borrow="false">My Gear</a>
+
 <p>
     <a asp-action="Create">Add Gear</a>
 </p>
-@if(ViewBag.nothingFound != true)
+@if (ViewBag.nothingFound != true)
 {
-<div class="gearCardList">
-    @foreach (var item in Model)
-    {
-        <div class="card border-primary mb-3" style="max-width: 20rem;">
-            <div class="card-header">@Html.DisplayFor(modelItem => item.Name)</div>
-            <div class="card-body">
-                <h6 class="card-title">@Html.DisplayFor(modelItem => item.GearType.Label)</h6>
-                @if (item.ImagePath != null)
-                {
-                    <img style="max-height: 250px; max-width: 5rem" src="~/images/@item.ImagePath" alt="gearItem picture" />
-                }
-                else
-                {
-                    <img style="max-height: 250px; max-width: 5rem" src="~/images/@item.GearType.ImagePath" alt="gearType picture" />
-                }
-                <p class="card-text">
-                    @Html.DisplayFor(modelItem => item.Description)
-                </p>
-                <button class="btn btn-info" data-target="#gearDetails-@item.Id " data-toggle="modal">View More</button>
-                <div class="modal" id="gearDetails-@item.Id" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">@item.Name</h4>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-                            <div class="modal-body">
-                                <p>@Html.DisplayFor(modelItem => item.Rating) </p>
-                                <p>@Html.DisplayFor(modelItem => item.Condtion)</p>
-                                <p>@Html.DisplayFor(modelItem => item.Description)</p>
-                            </div>
-                            <div>
-                                <button class="btn btn-outline-success badge-success border-success">@Html.ActionLink("Edit", "Edit", new { id = item.Id }) </button>
-                                <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@item.Id">
-                                    <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove Item" />
-                                </form>
-                            </div>
+    <div class="gearCardList">
+        @foreach (var item in Model)
+        {
+            <div class="card border-primary mb-3" style="max-width: 20rem;">
+                <div class="card-header">@Html.DisplayFor(modelItem => item.Name)</div>
+                <div class="card-body">
+                    <h6 class="card-title">@Html.DisplayFor(modelItem => item.GearType.Label)</h6>
+                    @if (item.ImagePath != null)
+                    {
+                        <img style="max-height: 250px; max-width: 5rem" src="~/images/@item.ImagePath" alt="gearItem picture" />
+                    }
+                    else
+                    {
+                        <img style="max-height: 250px; max-width: 5rem" src="~/images/@item.GearType.ImagePath" alt="gearType picture" />
+                    }
+                    <p class="card-text">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </p>
+                    <button class="btn btn-info" data-target="#gearDetails-@item.Id " data-toggle="modal">View More</button>
+                    <div class="modal" id="gearDetails-@item.Id" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">@item.Name</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>@Html.DisplayFor(modelItem => item.Rating) </p>
+                                    <p>@Html.DisplayFor(modelItem => item.Condtion)</p>
+                                    <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                                </div>
+                                <div>
+                                    @if (item.ApplicationuserId == currentUser.Id)
+                                    {
 
+                                        <button class="btn btn-outline-success badge-success border-success">@Html.ActionLink("Edit", "Edit", new { id = item.Id }) </button>
+                                        <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@item.Id">
+                                            <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove Item" />
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form asp-controller="SharedGears" asp-action="Delete" method="post" asp-route-returnItemId="@item.Id">
+                                            <input type="submit" class="btn btn-danger bg-danger border-danger" value="Return" />
+                                        </form>
+                                    }
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
 }
 else
 {
