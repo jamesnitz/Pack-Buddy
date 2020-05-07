@@ -10,12 +10,32 @@
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     </div>
 }
+@if (TempData.ContainsKey("messageSent"))
+{
+    <div class="alert alert-success">
+        @TempData["messageSent"]
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    </div>
+}
+
 
 <h1>Index</h1>
+<div class="sharedGearHeader">
+
 <form class="form-inline my-2 my-lg-0" asp-controller="SharedGears" asp-action="Index">
     <input class="form-control mr-sm-2" type="text" name="searchString" placeholder="Search For friends">
     <button hidden class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Search</button>
 </form>
+    <div class="card w-25">
+        <div class="card-body">
+            <h5 class="card-title">Notifications</h5>
+            <div>
+            <span class="badge badge-pill badge-primary">@Model.RequestsReceived.Count</span>
+            <p class="card-text">@(Model.RequestsReceived.Count == 1 ? "Notification": "Notifications")</p>
+            </div>
+        </div>
+    </div>
+</div>
 @if (ViewBag.nothingFound != true)
 {
     <div class="gearCardList">

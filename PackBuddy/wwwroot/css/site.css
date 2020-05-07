@@ -87,3 +87,7 @@ body {
 .homeButtons {
     text-align: center;
 }
+.sharedGearHeader{
+    display: flex;
+    justify-content: space-between;
+}

@@ -28,6 +28,7 @@ namespace PackBuddy.Controllers
         // GET: SharedGears
         public async Task<ActionResult> Index(string searchString)
         {
+            var user = await GetCurrentUserAsync();
             var gears = new List<Gear>();
             if (searchString != null)
             {
@@ -45,6 +46,8 @@ namespace PackBuddy.Controllers
                 ViewBag.nothingFound = true;
 
             }
+            var requestsRecieved = await _context.SharedGears.Where(g => g.Gear.ApplicationuserId == user.Id).ToListAsync();
+            viewModel.RequestsReceived = requestsRecieved;
             return View(viewModel);
         }
 
@@ -103,8 +106,8 @@ namespace PackBuddy.Controllers
             {
                 _context.Update(sharedGear);
                 await _context.SaveChangesAsync();
-                // TODO: Add update logic here
 
+                TempData["messageSent"] = "Your message has been sent.";
                 return RedirectToAction(nameof(Index));
             }
             catch

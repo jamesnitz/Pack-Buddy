@@ -16,5 +16,6 @@ namespace PackBuddy.Models.ViewModels.SharedGearsViewModels
         public string RequestMessage { get; set; }
         public bool AcceptedRequest { get; set; }
         public List<Gear> FriendGears { get; set; }
+        public List<SharedGear> RequestsReceived { get; set; }
     }
 }
