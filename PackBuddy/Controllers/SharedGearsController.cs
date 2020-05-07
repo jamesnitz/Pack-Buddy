@@ -144,10 +144,19 @@ namespace PackBuddy.Controllers
         // POST: SharedGears/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int requestId)
+        public async Task<ActionResult> Delete(int requestId, int? returnItemId)
         {
             try
             {
+                if (returnItemId != null)
+                {
+                    var returnedGear = await _context.SharedGears.FirstOrDefaultAsync(s => s.GearId == returnItemId);
+                    _context.SharedGears.Remove(returnedGear);
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction("Index", "Gears", new {borrow = true });
+                }
+             
                 var foundGear = await _context.SharedGears.FirstOrDefaultAsync(s => s.Id == requestId);
                 _context.SharedGears.Remove(foundGear);
                 await _context.SaveChangesAsync();

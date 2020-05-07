@@ -55,7 +55,7 @@ namespace PackBuddy.Controllers
                 if (usersGear.Count < 1)
                 {
                     ViewBag.nothingFound = true;
-                }
+                }   
                 return View(usersGear);
 
             }

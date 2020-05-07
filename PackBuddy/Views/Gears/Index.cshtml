@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<PackBuddy.Models.Gear>
-
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "Index";
 }
-
+@{
+    var currentUser = await UserManager.GetUserAsync(User);
+}
 <h1>Index</h1>
 <div>
     <form class="form-inline my-2 my-lg-0" asp-controller="Gears" asp-action="Index">
@@ -57,10 +60,20 @@
                                     <p>@Html.DisplayFor(modelItem => item.Description)</p>
                                 </div>
                                 <div>
-                                    <button class="btn btn-outline-success badge-success border-success">@Html.ActionLink("Edit", "Edit", new { id = item.Id }) </button>
-                                    <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@item.Id">
-                                        <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove Item" />
-                                    </form>
+                                    @if (item.ApplicationuserId == currentUser.Id)
+                                    {
+
+                                        <button class="btn btn-outline-success badge-success border-success">@Html.ActionLink("Edit", "Edit", new { id = item.Id }) </button>
+                                        <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@item.Id">
+                                            <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove Item" />
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form asp-controller="SharedGears" asp-action="Delete" method="post" asp-route-returnItemId="@item.Id">
+                                            <input type="submit" class="btn btn-danger bg-danger border-danger" value="Return" />
+                                        </form>
+                                    }
                                 </div>
 
                             </div>
