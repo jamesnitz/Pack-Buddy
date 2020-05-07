@@ -52,6 +52,9 @@
 </div>
 <div>
     @Html.ActionLink("Add Notes", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Add Gear", "Edit", "GearTrips", new { tripId = Model.Id} ) |
+    @if (Model.EndDate > DateTime.Now)
+    {
+        @Html.ActionLink("Add Gear", "Edit", "GearTrips", new { tripId = Model.Id} )
+    }
     <a asp-action="Index">Back to List</a>
 </div>
