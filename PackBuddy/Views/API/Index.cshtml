@@ -30,22 +30,33 @@
     <tbody>
         @foreach (var item in Model.Result)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id) <img src="@Html.DisplayFor(ModelItem => item.Images.PrimarySmall)" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FinalPrice)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <img src="@Html.DisplayFor(ModelItem => item.Images.PrimarySmall)" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinalPrice)
+            </td>
+            <td>
+            <button class="btn btn-info" data-target="#apigear-@item.Id " data-toggle="modal">View More</button>
+            </td>
+                <div class="modal" id="apigear-@item.Id" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Details</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <a href="@item.AffiliateWebUrl" target="_blank">Purchase Link</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </tr>
         }
     </tbody>
 </table>
