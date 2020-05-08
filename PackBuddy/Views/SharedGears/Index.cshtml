@@ -33,9 +33,9 @@
                 <span class="badge badge-pill badge-primary">@Model.RequestsReceived.Count</span>
                 <p class="card-text">@(Model.RequestsReceived.Count == 1 ? "Notification": "Notifications")</p>
                 @* MODAL START *@
+                <button class="btn btn-info" data-target="#notifications " data-toggle="modal">View More</button>
                 @foreach (var request in Model.RequestsReceived)
                 {
-                    <button class="btn btn-info" data-target="#notifications " data-toggle="modal">View More</button>
                     <div class="modal" id="notifications" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
