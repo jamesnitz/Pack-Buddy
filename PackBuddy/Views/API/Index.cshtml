@@ -7,6 +7,8 @@
     <input class="form-control mr-sm-2" type="text" name="searchString" placeholder="Product search">
     <button class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Search</button>
 </form>
+<a type="button" class="btn btn-success btn-sm" asp-action="Index" asp-route-favorite="false">Search</a>
+<a type="button" class="btn btn-success btn-sm" asp-action="Index" asp-route-favorite="true">Favorites</a>
 
 @if (ViewBag.noSearch == true)
 {
@@ -21,57 +23,70 @@ else
     else
     {
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    ID
-                </th>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Price
-                </th>
-                <th>
-                    Pic
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (var i = 0; i < Model.Result.Count; i++)
-            {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        <img src="@Html.DisplayFor(ModelItem => Model.Result[i].Images.PrimarySmall)" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Result[i].Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Result[i].FinalPrice)
-                    </td>
-                    <td>
-                        <button class="btn btn-info" data-target="#apigear-@Model.Result[i].Id " data-toggle="modal">View More</button>
-                    </td>
-                    <div class="modal" id="apigear-@Model.Result[i].Id" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Details</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <a href="@Model.Result[i].AffiliateWebUrl" target="_blank">Purchase </a>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Pic
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < Model.Result.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Result[i].Id)
+                            <img src="@Html.DisplayFor(ModelItem => Model.Result[i].Images.PrimarySmall)" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Result[i].Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Result[i].FinalPrice)
+                        </td>
+                        <td>
+                            <button class="btn btn-info" data-target="#apigear-@Model.Result[i].Id " data-toggle="modal">View More</button>
+                        </td>
+                        <div class="modal" id="apigear-@Model.Result[i].Id" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Details</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <a href="@Model.Result[i].AffiliateWebUrl" target="_blank">Purchase </a>
+                                    </div>
+                                    @if(ViewBag.favorite == true)
+                                    {
+                                        <form asp-controller="API" asp-action="Delete" asp-route-Id="@Model.Result[i].Id" method="post">
+                                            <button type="submit"><img src="~/images/goldstar.png"></button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                    <form asp-controller="API" asp-action="Create" asp-route-Id="@Model.Result[i].Id" method="post">
+                                        <button type="submit"><img src="~/images/star.png"></button>
+                                    </form>
+                                    }
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </tr>
-            }
-        </tbody>
-    </table>
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
 }
 

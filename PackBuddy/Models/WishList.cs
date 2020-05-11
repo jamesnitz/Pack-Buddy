@@ -18,6 +18,7 @@ namespace PackBuddy.Models
         [Required]
         public string ApplicationuserId { get; set; }
         public ApplicationUser applicationUser { get; set; }
-        public bool Favorite { get; set; }
+        public string ProductId { get; set; }
+ 
     }
 }
