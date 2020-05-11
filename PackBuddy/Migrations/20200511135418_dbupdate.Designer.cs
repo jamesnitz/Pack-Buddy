@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PackBuddy.Data;
 
 namespace PackBuddy.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200511135418_dbupdate")]
+    partial class dbupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,7 +233,7 @@ namespace PackBuddy.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e2412d6c-563f-4749-9009-bba87dd21dd2",
+                            ConcurrencyStamp = "b67f2625-4e23-4129-855e-d0ebcf44e36b",
                             Email = "james@james.com",
                             EmailConfirmed = true,
                             FirstName = "James",
@@ -239,7 +241,7 @@ namespace PackBuddy.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JAMES@JAMES.COM",
                             NormalizedUserName = "JAMES@JAMES.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDjpzLuwSuGRRCtuetsEiOxDbuuLNl7ZMXq5dwwnld7k+lszKEDMQrDrl6xHlhRlfg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPGdSdkiG8gRkviN93p8/THRsFCODmi8//t1LkSkfWd1OhuoDfxfJBKGBTFa//7sQg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,
@@ -451,6 +453,9 @@ namespace PackBuddy.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<bool>("Favorite")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -459,9 +464,6 @@ namespace PackBuddy.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("PrimaryImage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProductId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PurchaseLink")

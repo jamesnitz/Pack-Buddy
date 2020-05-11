@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace PackBuddy.Models
@@ -18,7 +19,11 @@ namespace PackBuddy.Models
             public string Title { get; set; }
             public List<Results> Result { get; set; }
         }
-
+        
+        public class Response
+        {
+            public Results Result { get; set; }
+        }
         public class Results
         {
             public string Id { get; set; }

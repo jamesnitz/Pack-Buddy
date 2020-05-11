@@ -21,7 +21,6 @@ namespace PackBuddy.Data
         public DbSet<SharedGear> SharedGears { get; set; }
         public DbSet<Trip> Trips { get; set; }
         public DbSet<WishList> WishLists { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
