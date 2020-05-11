@@ -39,6 +39,7 @@ namespace PackBuddy.Models
             public Brand Brand { get; set; }
             public float ListPrice { get; set; }
             public float FinalPrice { get; set; }
+            public bool Favorite { get; set; }
         }
 
         public class Reviews
