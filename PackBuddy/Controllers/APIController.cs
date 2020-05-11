@@ -19,14 +19,18 @@ namespace PackBuddy.Controllers
         {
             if (searchString != null)
             {
-                var gear = await GetGearRecord(searchString);
-                return View(gear);
+            var gear = await GetGearRecord(searchString);
+                if (gear.Count < 1)
+                {
+                    ViewBag.noResults = true;
+                }
+            return View(gear);
             }
-            else
+            if (searchString == null)
             {
-                var gear = await GetGear();
-                return View(gear);
+                ViewBag.noSearch = true;
             }
+            return View();          
         }
 
         // GET: API/Details/5

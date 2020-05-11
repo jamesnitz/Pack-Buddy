@@ -13,9 +13,11 @@ namespace PackBuddy.Models
         [Required]
         public string Name { get; set; }
         public double Price { get; set; }
+        public string PrimaryImage { get; set; }
         public string PurchaseLink { get; set; }
         [Required]
         public string ApplicationuserId { get; set; }
         public ApplicationUser applicationUser { get; set; }
+        public bool Favorite { get; set; }
     }
 }
