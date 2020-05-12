@@ -8,20 +8,22 @@
     var currentUser = await UserManager.GetUserAsync(User);
 }
 <h1>Index</h1>
-<div>
-    <form class="form-inline my-2 my-lg-0" asp-controller="Gears" asp-action="Index">
-        <input class="form-control mr-sm-2" type="text" name="searchString" placeholder="Search For Products">
-        <button hidden class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Search</button>
-    </form>
+<div class="gearListHeader">
+    <div>
+        <a type="button" class="btn btn-success btn-sm" asp-action="Index" asp-route-borrow="true">Borrowed Gear</a>
+        <a type="button" class="btn btn-success btn-sm" asp-action="Index" asp-route-borrow="false">My Gear</a>
+    </div>
     <form class="form-inline my-2 my-lg-0" asp-controller="Gears" asp-action="Index">
         <select class="form-control" name="filter" asp-items="@ViewBag.ProductTypes">
             <option selected value="0" disabled>All Gear</option>
         </select>
-        <button class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Search</button>
+        <button class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Filter</button>
+    </form>
+    <form class="form-inline my-2 my-lg-0" asp-controller="Gears" asp-action="Index">
+        <input class="form-control mr-sm-2" type="text" name="searchString" placeholder="Search For Gear">
+        <button hidden class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Search</button>
     </form>
 </div>
-<a type="button" class="btn btn-success btn-sm" asp-action="Index" asp-route-borrow="true">Borrowed Gear</a>
-<a type="button" class="btn btn-success btn-sm" asp-action="Index" asp-route-borrow="false">My Gear</a>
 
 <p>
     <a asp-action="Create">Add Gear</a>
