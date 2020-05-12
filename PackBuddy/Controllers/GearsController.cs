@@ -166,7 +166,7 @@ namespace PackBuddy.Controllers
             };
             if (gear.ImagePath != null)
             {
-                   
+                viewModel.ImageString = gear.ImagePath;
             }
     
             return View(viewModel);
@@ -199,6 +199,10 @@ namespace PackBuddy.Controllers
                     {
                         await gearFormView.ImagePath.CopyToAsync(fileStream);
                     }
+                }
+                else if (gearFormView.ImageString != null)
+                {
+                    gearData.ImagePath = gearFormView.ImageString;
                 }
 
                 _context.Gears.Update(gearData);
