@@ -31,7 +31,7 @@
     <div class="gearCardList">
         @foreach (var item in Model)
         {
-            <div class="card border-primary mb-3" style="max-width: 20rem;">
+            <div class="gearCard card border-primary mb-3" style="max-width: 20rem;">
                 <div class="card-header">@Html.DisplayFor(modelItem => item.Name)</div>
                 <div class="card-body">
                     <h6 class="card-title">@Html.DisplayFor(modelItem => item.GearType.Label)</h6>

@@ -72,6 +72,7 @@ body {
 .gearCardList{
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 .tripCardList {
     display: flex;
@@ -82,6 +83,11 @@ body {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+}
+
+.gearCard{
+    min-width: 11rem;
+    text-align: center;
 }
 
 .homeButtons {
