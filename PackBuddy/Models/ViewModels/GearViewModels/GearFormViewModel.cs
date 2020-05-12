@@ -22,7 +22,7 @@ namespace PackBuddy.Models.ViewModels.GearViewModels
         [Required]
         public string Condtion { get; set; }
         public IFormFile ImagePath { get; set; }
-
+        public string ImageString { get; set; }
         public List<SelectListItem> GearTypeOptions { get; set; }
     }
 }
