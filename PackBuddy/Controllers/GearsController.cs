@@ -29,10 +29,17 @@ namespace PackBuddy.Controllers
         // GET: Gears
         public async Task<ActionResult> Index(string searchString, int filter, bool borrow)
         {
+            var user = await GetCurrentUserAsync();
+            ViewBag.BorrowedItems = await _context.SharedGears
+                    .Include(s => s.Gear)
+                    .Include(s => s.Gear.GearType)
+                    .Where(s => s.AcceptedRequest == true)
+                    .Where(s => s.ApplicationuserId == user.Id)
+                    .ToListAsync();
+
             var gearOptions = await _context.GearTypes.Select(g => new SelectListItem() { Text = g.Label, Value = g.Id.ToString() })
                .ToListAsync();
             ViewBag.ProductTypes = gearOptions;
-            var user = await GetCurrentUserAsync();
             if (searchString != null)
             {
                 var usersGear = await _context.Gears.Where(g => g.ApplicationuserId == user.Id)
@@ -81,7 +88,7 @@ namespace PackBuddy.Controllers
             var usersGear = await _context.Gears.Where(g => g.ApplicationuserId == user.Id)
                 .Include(g => g.GearType)
                 .ToListAsync();
-            return View(usersGear);
+                return View(usersGear);
             }
         }
 

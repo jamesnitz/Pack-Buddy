@@ -86,8 +86,9 @@ body {
 }
 
 .gearCard{
-    min-width: 11rem;
+    width: 11rem;
     text-align: center;
+   
 }
 
 .homeButtons {
