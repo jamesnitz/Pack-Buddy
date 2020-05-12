@@ -39,7 +39,7 @@
                     <h6 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h6>
                     @if (item.ImagePath != null)
                     {
-                        <img style=" width: 6rem" src="~/images/@item.ImagePath" alt="gearItem picture" />
+                        <img style=" max-height: 66px; max-width: 6rem" src="~/images/@item.ImagePath" alt="gearItem picture" />
                         <button class="btn btn-info" style="margin-top: 4rem" data-target="#gearDetails-@item.Id " data-toggle="modal">View More</button>
 
                     }
