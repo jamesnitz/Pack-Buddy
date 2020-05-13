@@ -26,5 +26,6 @@ namespace PackBuddy.Models
         public ApplicationUser ApplicationUser { get; set; }
         public List<GearTrip> GearTrips { get; set; }
 
+
     }
 }
