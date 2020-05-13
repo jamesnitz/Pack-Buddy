@@ -17,6 +17,7 @@ namespace PackBuddy.Models.ViewModels.GearViewModels
         [Required]
         [Display(Name = "Gear Type")]
         public int GearTypeId { get; set; }
+        [Range(typeof(int), "1", "5", ErrorMessage = "Rating must be between 1 - 5")]
         [Display(Name = "Rate 1-5")]
         public int Rating { get; set; }
         [Required]

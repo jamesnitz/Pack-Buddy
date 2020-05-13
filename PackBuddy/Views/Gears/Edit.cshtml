@@ -42,7 +42,7 @@
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
                 @if (Model.ImageString != null)
                 {
-                <img src="~/images/@Model.ImageString" />
+                <img style="max-height: 150px;" src="~/images/@Model.ImageString" />
                 <input hidden asp-for="ImageString" class="form-control" />
                 }
             </div>

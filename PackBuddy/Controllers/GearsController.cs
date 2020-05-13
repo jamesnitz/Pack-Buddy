@@ -106,6 +106,7 @@ namespace PackBuddy.Controllers
                 .ToListAsync();
             var viewModel = new GearFormViewModel();
             viewModel.GearTypeOptions = gearOptions;
+            viewModel.Rating = 1;
             return View(viewModel);
         }
 
