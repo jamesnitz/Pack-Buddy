@@ -55,10 +55,27 @@
                                     <h4 class="modal-title">@item.Name</h4>
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
-                                <div class="modal-body">
-                                    <p>Rating: @Html.DisplayFor(modelItem => item.Rating) </p>
-                                    <p>Condition: @Html.DisplayFor(modelItem => item.Condtion)</p>
+                                <div class="modal-body gearModalDetails">
+                                    <div class="gearModalDetailsText">
                                     <p>Description: @Html.DisplayFor(modelItem => item.Description)</p>
+                                    <p>Condition: @Html.DisplayFor(modelItem => item.Condtion)</p>
+                                    <p>
+                                        Rating: @for (var i = 0; i < item.Rating; i++)
+                                        {
+                                            <img style="width: 1rem;" src="~/images/goldstar.png" alt="gold star" />
+                                        }
+                                    </p>
+                                    </div>
+                                    <div>
+                                        @if (item.ImagePath != null)
+                                        {
+                                            <img style=" max-height: 66px; max-width: 6rem" src="~/images/@item.ImagePath" alt="gearItem picture" />
+                                        }
+                                        else
+                                        {
+                                            <img style=" width: 6rem" src="~/images/@item.GearType.ImagePath" alt="gearType picture" />
+                                        }
+                                    </div>
                                 </div>
                                 <div>
                                     @if (item.ApplicationuserId == currentUser.Id)

@@ -106,5 +106,16 @@ body {
 
 .modalGearButtons{
     display: flex;
-    justify-content: center
+    justify-content: center;
+}
+
+.modalGearButtons > * {
+    margin: 2px;
+}
+.gearModalDetails{
+    display: flex;
+    justify-content: space-between;
+}
+.gearModalDetailsText{
+    text-align: left;
 }
