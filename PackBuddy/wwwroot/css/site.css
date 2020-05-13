@@ -97,8 +97,14 @@ body {
 .sharedGearHeader{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 1rem;
 }
 .gearListHeader{
     display: flex;
     justify-content: space-between;
+}
+
+.modalGearButtons{
+    display: flex;
+    justify-content: center
 }

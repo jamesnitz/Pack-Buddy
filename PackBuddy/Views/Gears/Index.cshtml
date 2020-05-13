@@ -9,7 +9,7 @@
 }
 <div class="gearListHeader">
     <div>
-             <span class="badge badge-pill badge-primary">@ViewBag.BorrowedItems.Count</span>
+        <span class="badge badge-pill badge-primary">@ViewBag.BorrowedItems.Count</span>
         <a type="button" class="btn btn-success btn-sm" asp-action="Index" asp-route-borrow="true">Borrowed Gear</a>
         <a type="button" class="btn btn-success btn-sm" asp-action="Index" asp-route-borrow="false">My Gear</a>
     </div>
@@ -56,18 +56,19 @@
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>@Html.DisplayFor(modelItem => item.Rating) </p>
-                                    <p>@Html.DisplayFor(modelItem => item.Condtion)</p>
-                                    <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                                    <p>Rating: @Html.DisplayFor(modelItem => item.Rating) </p>
+                                    <p>Condition: @Html.DisplayFor(modelItem => item.Condtion)</p>
+                                    <p>Description: @Html.DisplayFor(modelItem => item.Description)</p>
                                 </div>
                                 <div>
                                     @if (item.ApplicationuserId == currentUser.Id)
                                     {
-
-                                        <button class="btn btn-outline-success badge-success border-success">@Html.ActionLink("Edit", "Edit", new { id = item.Id }) </button>
-                                        <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@item.Id">
-                                            <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove Item" />
-                                        </form>
+                                        <div class="modalGearButtons">
+                                            <button class="btn btn-outline-success badge-success border-success">@Html.ActionLink("Edit", "Edit", new { id = item.Id }) </button>
+                                            <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@item.Id">
+                                                <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove Item" />
+                                            </form>
+                                        </div>
                                     }
                                     else
                                     {
