@@ -75,6 +75,7 @@ namespace PackBuddy.Controllers
                     .Where(s => s.ApplicationuserId == user.Id)
                     .ToListAsync();
                 var usersGear = new List<Gear>();
+                ViewBag.Borrow = true;
                 foreach(var gear in sharedGear)
                 {
                     usersGear.Add(gear.Gear);
