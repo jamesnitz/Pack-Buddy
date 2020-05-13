@@ -120,7 +120,7 @@ namespace PackBuddy.Controllers
                 var gearData = new Gear()
                 {
                     Name = gearFormView.Name,
-                    Condtion = gearFormView.Condtion,
+                    Condition = gearFormView.Condition,
                     ApplicationuserId = user.Id,
                     Description = gearFormView.Description,
                     Rating = gearFormView.Rating,
@@ -159,7 +159,7 @@ namespace PackBuddy.Controllers
             var viewModel = new GearFormViewModel()
             {
                 Name = gear.Name,
-                Condtion = gear.Condtion,
+                Condition = gear.Condition,
                 Description = gear.Description,
                 GearTypeId = gear.GearTypeId,
                 Rating = gear.Rating,
@@ -185,7 +185,7 @@ namespace PackBuddy.Controllers
                 {
                     Id = id,
                     Name = gearFormView.Name,
-                    Condtion = gearFormView.Condtion,
+                    Condition = gearFormView.Condition,
                     ApplicationuserId = user.Id,
                     Description = gearFormView.Description,
                     Rating = gearFormView.Rating,

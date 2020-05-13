@@ -223,7 +223,7 @@ namespace PackBuddy.Migrations
                     Description = table.Column<string>(nullable: true),
                     GearTypeId = table.Column<int>(nullable: false),
                     Rating = table.Column<int>(nullable: false),
-                    Condtion = table.Column<string>(nullable: false),
+                    Condition = table.Column<string>(nullable: false),
                     ImagePath = table.Column<string>(nullable: true),
                     ApplicationuserId = table.Column<string>(nullable: false)
                 },

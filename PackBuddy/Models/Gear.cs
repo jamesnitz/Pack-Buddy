@@ -19,7 +19,7 @@ namespace PackBuddy.Models
         public GearType GearType { get; set; }
         public int Rating { get; set; }
         [Required]
-        public string Condtion { get; set; }
+        public string Condition { get; set; }
         public string ImagePath { get; set; }
         [Required]
         public string ApplicationuserId { get; set; }
