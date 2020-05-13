@@ -3,13 +3,10 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h1>Edit</h1>
-
-<h4>Gear</h4>
+<h4 style="text-align: center">Update - @Model.Name</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3" style="margin: auto;">
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -35,9 +32,9 @@
                 <span asp-validation-for="Rating" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Condtion" class="control-label"></label>
-                <input asp-for="Condtion" class="form-control" />
-                <span asp-validation-for="Condtion" class="text-danger"></span>
+                <label asp-for="Condition" class="control-label"></label>
+                <input asp-for="Condition" class="form-control" />
+                <span asp-validation-for="Condition" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ImagePath" class="control-label">Upload an Image</label>
@@ -45,7 +42,7 @@
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
                 @if (Model.ImageString != null)
                 {
-                <img src="~/images/@Model.ImageString" />
+                <img style="max-height: 150px;" src="~/images/@Model.ImageString" />
                 <input hidden asp-for="ImageString" class="form-control" />
                 }
             </div>

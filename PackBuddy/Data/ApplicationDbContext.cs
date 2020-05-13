@@ -83,7 +83,7 @@ namespace PackBuddy.Data
                 {
                     Id = 1,
                     ApplicationuserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                    Condtion = "Like New",
+                    Condition = "Like New",
                     Description = "Light, durable, water-proof hiking Boots",
                     Name = "Terrex Free Hiker Pro",
                     Rating = 5,
@@ -93,7 +93,7 @@ namespace PackBuddy.Data
                 {
                     Id = 2,
                     ApplicationuserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                    Condtion = "Slightly used",
+                    Condition = "Slightly used",
                     Description = "Solid tent",
                     Name = "Big Agnes UL2",
                     Rating = 4,

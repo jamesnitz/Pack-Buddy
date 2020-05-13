@@ -9,22 +9,24 @@
 }
 <div class="gearListHeader">
     <div>
-             <span class="badge badge-pill badge-primary">@ViewBag.BorrowedItems.Count</span>
+        <span class="badge badge-pill badge-primary">@ViewBag.BorrowedItems.Count</span>
         <a type="button" class="btn btn-success btn-sm" asp-action="Index" asp-route-borrow="true">Borrowed Gear</a>
         <a type="button" class="btn btn-success btn-sm" asp-action="Index" asp-route-borrow="false">My Gear</a>
     </div>
+    @if (ViewBag.Borrow != true)
+    {
     <form class="form-inline my-2 my-lg-0" asp-controller="Gears" asp-action="Index">
         <select class="form-control" name="filter" asp-items="@ViewBag.ProductTypes">
             <option selected value="0" disabled>All Gear</option>
         </select>
         <button class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Filter</button>
     </form>
+    }
     <form class="form-inline my-2 my-lg-0" asp-controller="Gears" asp-action="Index">
         <input class="form-control mr-sm-2" type="text" name="searchString" placeholder="Search For Gear">
         <button hidden class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Search</button>
     </form>
 </div>
-
 <p>
     <a asp-action="Create">Add Gear</a>
 </p>
@@ -41,7 +43,6 @@
                     {
                         <img style=" max-height: 66px; max-width: 6rem" src="~/images/@item.ImagePath" alt="gearItem picture" />
                         <button class="btn btn-info" style="margin-top: 4rem" data-target="#gearDetails-@item.Id " data-toggle="modal">View More</button>
-
                     }
                     else
                     {
@@ -55,19 +56,37 @@
                                     <h4 class="modal-title">@item.Name</h4>
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
-                                <div class="modal-body">
-                                    <p>@Html.DisplayFor(modelItem => item.Rating) </p>
-                                    <p>@Html.DisplayFor(modelItem => item.Condtion)</p>
-                                    <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                                <div class="modal-body gearModalDetails">
+                                    <div class="gearModalDetailsText">
+                                    <p>Description: @Html.DisplayFor(modelItem => item.Description)</p>
+                                    <p>Condition: @Html.DisplayFor(modelItem => item.Condition)</p>
+                                    <p>
+                                        Rating: @for (var i = 0; i < item.Rating; i++)
+                                        {
+                                            <img style="width: 1rem;" src="~/images/goldstar.png" alt="gold star" />
+                                        }
+                                    </p>
+                                    </div>
+                                    <div>
+                                        @if (item.ImagePath != null)
+                                        {
+                                            <img style=" max-height: 66px; max-width: 6rem" src="~/images/@item.ImagePath" alt="gearItem picture" />
+                                        }
+                                        else
+                                        {
+                                            <img style=" width: 6rem" src="~/images/@item.GearType.ImagePath" alt="gearType picture" />
+                                        }
+                                    </div>
                                 </div>
                                 <div>
                                     @if (item.ApplicationuserId == currentUser.Id)
                                     {
-
-                                        <button class="btn btn-outline-success badge-success border-success">@Html.ActionLink("Edit", "Edit", new { id = item.Id }) </button>
-                                        <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@item.Id">
-                                            <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove Item" />
-                                        </form>
+                                        <div class="modalGearButtons">
+                                            <button class="btn btn-outline-success badge-success border-success">@Html.ActionLink("Edit", "Edit", new { id = item.Id }) </button>
+                                            <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@item.Id">
+                                                <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove Item" />
+                                            </form>
+                                        </div>
                                     }
                                     else
                                     {
@@ -76,7 +95,6 @@
                                         </form>
                                     }
                                 </div>
-
                             </div>
                         </div>
                     </div>
