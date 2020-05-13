@@ -46,6 +46,7 @@
                                 <div class="modal-body">
                                     <p>@request.ApplicationUser.FirstName @request.ApplicationUser.LastName has requested: @request.Gear.Name</p>
                                     <p>@request.RequestMessage</p>
+                                    <img src="~/images/@(request.Gear.ImagePath != null ? @request.Gear.ImagePath : request.Gear.GearType.ImagePath)" />
                                 </div>
                                 <div>
                                     <form asp-controller="SharedGears" asp-action="AcceptRequest" method="post" asp-route-requestId="@request.Id">
@@ -78,13 +79,11 @@
                     {
                         <img style=" max-height: 66px; max-width: 6rem" src="~/images/@item.ImagePath" alt="gearItem picture" />
                         <button style="margin-top: 4rem" class="btn btn-info" data-target="#gearDetails-@item.Id " data-toggle="modal">View More</button>
-
                     }
                     else
                     {
                         <img style="width: 6rem" src="~/images/@item.GearType.ImagePath" alt="gearType picture" />
                         <button style="margin-top: 2rem" class="btn btn-info" data-target="#gearDetails-@item.Id " data-toggle="modal">View More</button>
-
                     }
                     <div class="modal" id="gearDetails-@item.Id" role="dialog">
                         <div class="modal-dialog">
@@ -93,10 +92,27 @@
                                     <h4 class="modal-title">@item.Name</h4>
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
-                                <div class="modal-body">
-                                    <p>@Html.DisplayFor(modelItem => item.Rating) </p>
-                                    <p>@Html.DisplayFor(modelItem => item.Condition)</p>
-                                    <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                                <div class="modal-body gearModalDetails">
+                                    <div class="gearModalDetailsText">
+                                        <p>Description: @Html.DisplayFor(modelItem => item.Description)</p>
+                                        <p>Condition: @Html.DisplayFor(modelItem => item.Condition)</p>
+                                        <p>
+                                            Rating: @for (var i = 0; i < item.Rating; i++)
+                                            {
+                                                <img style="width: 1rem;" src="~/images/goldstar.png" alt="gold star" />
+                                            }
+                                        </p>
+                                    </div>
+                                    <div>
+                                        @if (item.ImagePath != null)
+                                        {
+                                            <img style=" max-height: 66px; max-width: 6rem" src="~/images/@item.ImagePath" alt="gearItem picture" />
+                                        }
+                                        else
+                                        {
+                                            <img style=" width: 6rem" src="~/images/@item.GearType.ImagePath" alt="gearType picture" />
+                                        }
+                                    </div>
                                 </div>
                                 <div>
                                     <form asp-controller="SharedGears" asp-route-gearId="@item.Id" asp-action="Create">
