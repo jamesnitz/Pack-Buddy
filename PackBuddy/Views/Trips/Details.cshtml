@@ -5,14 +5,15 @@
 }
 
 <h1 style="text-align:center">@Model.Name</h1>
-
 <div>
     <hr />
     <h3 style="text-align:center">  @Html.DisplayFor(model => model.StartDate) -  @Html.DisplayFor(model => model.EndDate)</h3>
     <dl class="row" style="margin:auto;">
+        <dt>
+            Notes:
+        </dt>
         @if(Model.Notes != null)
         {
-
         <dd class = "tripNotes">
             @Html.DisplayFor(model => model.Notes)
         </dd>
@@ -27,7 +28,6 @@
     <div><strong>Packed Gear</strong></div>
     @if (Model.GearTrips.Count >= 1)
     {
-
             <div class="tripDetailGearList">
            @foreach(var geartrip in Model.GearTrips)
            {
@@ -60,5 +60,5 @@
         @Html.ActionLink("Add Gear", "Edit", "GearTrips", new { tripId = Model.Id })
     }
     |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to Trip List</a>
 </div>

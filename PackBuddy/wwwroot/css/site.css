@@ -127,7 +127,6 @@ body {
     overflow: auto;
 }
 
-
 .tripGearCard{
     margin: 2px;
     min-width: 8.5rem;
@@ -135,7 +134,4 @@ body {
 }
 .tripDetailGearList::-webkit-scrollbar {
     display: none;
-}
-.tripNotes{
-    border: 1px solid black;
 }
