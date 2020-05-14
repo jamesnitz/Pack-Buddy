@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using PackBuddy.Data;
 using PackBuddy.Models;
@@ -21,12 +22,16 @@ namespace PackBuddy.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IConfiguration Configuration;
 
-        public APIController(ApplicationDbContext context, UserManager<ApplicationUser> usermanager)
+        public APIController(ApplicationDbContext context, UserManager<ApplicationUser> usermanager,IConfiguration configuration)
         {
             _userManager = usermanager;
             _context = context;
+            Configuration = configuration;
         }
+      
+        
         // GET: API
         public async Task<ActionResult> Index(string searchString, bool favorite)
         {
@@ -143,18 +148,24 @@ namespace PackBuddy.Controllers
         }
         private async Task<RootGear> GetGearRecord(string searchString)
         {
+            var apiSecret = new SierraTradingPostKey();
+            Configuration.GetSection("SierraTradingPostKey").Bind(apiSecret);
+            var key = apiSecret.key;
             using (var client = new HttpClient())
             {
-                var content = await client.GetStringAsync($"https://api.sierra.com/api/1.0/products/search~{searchString}?api_key=a13e35793a797e828b12e82f51d4ba88&perpage=100");
+                var content = await client.GetStringAsync($"https://api.sierra.com/api/1.0/products/search~{searchString}?api_key={key}&perpage=100");
                 return JsonConvert.DeserializeObject<RootGear>(content);
             }
 
         }
         private async Task<Response> GetGear(string id)
         {
+            var apiSecret = new SierraTradingPostKey();
+            Configuration.GetSection("SierraTradingPostKey").Bind(apiSecret);
+            var key = apiSecret.key;
             using (var client = new HttpClient())
             {
-                var content = await client.GetStringAsync($"http://api.sierratradingpost.com/api/1.0/product/{id}/?api_key=a13e35793a797e828b12e82f51d4ba88");
+                var content = await client.GetStringAsync($"http://api.sierratradingpost.com/api/1.0/product/{id}/?api_key={key}");
                 var response = JsonConvert.DeserializeObject<Response>(content);
                 return response;
             }

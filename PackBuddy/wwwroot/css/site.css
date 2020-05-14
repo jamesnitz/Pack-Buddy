@@ -136,3 +136,6 @@ body {
 .tripDetailGearList::-webkit-scrollbar {
     display: none;
 }
+.tripNotes{
+    border: 1px solid black;
+}

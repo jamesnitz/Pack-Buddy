@@ -9,38 +9,25 @@
 <div>
     <hr />
     <h3 style="text-align:center">  @Html.DisplayFor(model => model.StartDate) -  @Html.DisplayFor(model => model.EndDate)</h3>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Notes)
-        </dt>
-        <dd class = "col-sm-10">
+    <dl class="row" style="margin:auto;">
+        @if(Model.Notes != null)
+        {
+
+        <dd class = "tripNotes">
             @Html.DisplayFor(model => model.Notes)
         </dd>
+        }
+        else
+        {
+        <dd>
+            N/A
+        </dd>
+        }
     </dl>
+    <div><strong>Packed Gear</strong></div>
+    @if (Model.GearTrips.Count >= 1)
+    {
+
             <div class="tripDetailGearList">
            @foreach(var geartrip in Model.GearTrips)
            {
@@ -60,6 +47,11 @@
             </div>      
            }
             </div>
+    }
+    else
+    {
+        <div>No Gear Added</div>
+    }
 </div>
 <div>
     @Html.ActionLink("Add Notes", "Edit", new { id = Model.Id }) |
