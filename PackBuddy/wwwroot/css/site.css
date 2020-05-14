@@ -87,9 +87,9 @@ body {
 
 .gearCard{
     width: 11rem;
-    text-align: center;
-   
+    text-align: center;   
 }
+
 
 .homeButtons {
     text-align: center;
@@ -112,10 +112,27 @@ body {
 .modalGearButtons > * {
     margin: 2px;
 }
+
 .gearModalDetails{
     display: flex;
     justify-content: space-between;
 }
+
 .gearModalDetailsText{
     text-align: left;
+}
+
+.tripDetailGearList{
+    display: flex;
+    overflow: auto;
+}
+
+
+.tripGearCard{
+    margin: 2px;
+    min-width: 8.5rem;
+   text-align:center;
+}
+.tripDetailGearList::-webkit-scrollbar {
+    display: none;
 }

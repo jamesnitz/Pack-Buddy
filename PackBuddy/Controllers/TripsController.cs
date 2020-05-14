@@ -42,6 +42,7 @@ namespace PackBuddy.Controllers
             var foundTrip = await _context.Trips
                 .Include(t => t.GearTrips)
                     .ThenInclude(t => t.Gear)
+                    .ThenInclude(g => g.GearType)
                 .FirstOrDefaultAsync(t => t.Id == id);
 
             return View(foundTrip);
