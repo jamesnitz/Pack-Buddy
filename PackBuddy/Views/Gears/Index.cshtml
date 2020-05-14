@@ -28,7 +28,7 @@
     }
 </div>
 <p>
-    <a asp-action="Create">Add Gear</a>
+    <a asp-action="Create"><strong>Add Gear</strong></a>
 </p>
 @if (ViewBag.nothingFound != true)
 {
@@ -81,18 +81,22 @@
                                 <div>
                                     @if (item.ApplicationuserId == currentUser.Id)
                                     {
-                                        <div class="modalGearButtons">
-                                            <button class="btn btn-outline-success badge-success border-success">@Html.ActionLink("Edit", "Edit", new { id = item.Id }) </button>
-                                            <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@item.Id">
-                                                <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove Item" />
-                                            </form>
-                                        </div>
+                                    <div class="modalGearButtons">
+                                        <form asp-controller="Gears" asp-action="Edit" method="get" asp-route-id="@item.Id">
+                                            <input type="submit" class="btn btn-success bg-success border-success "  value="Update" />
+                                        </form>
+                                        <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@item.Id">
+                                            <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove Item" />
+                                        </form>
+                                    </div>
                                     }
                                     else
                                     {
+                                        <div class="modalGearButtons">
                                         <form asp-controller="SharedGears" asp-action="Delete" method="post" asp-route-returnItemId="@item.Id">
                                             <input type="submit" class="btn btn-danger bg-danger border-danger" value="Return" />
                                         </form>
+                                        </div>
                                     }
                                 </div>
                             </div>
