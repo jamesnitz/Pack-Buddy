@@ -4,25 +4,24 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Start</h1>
 
-<h4>Packing!</h4>
+<h4 style="text-align:center;">Start Packing!</h4>
 <hr />
 <form asp-action="Create">
     <div class="gearTrip_GearCardList">
         @for (var i = 0; i < Model.AddedGears.Count; i++)
         {
-        <div class="card border-primary mb-3" style="max-width: 9rem;">
-            <div class="card-header">@Html.DisplayFor(modelItem => Model.AddedGears[i].Gear.Name)</div>
+        <div class="gearTripCreateCard card border-primary mb-3" style="max-width: 9rem;">
+            <div class="card-header">@Html.DisplayFor(modelItem => Model.AddedGears[i].Gear.GearType.Label)</div>
             <div class="card-body">
-                <h6 class="card-title">@Html.DisplayFor(modelItem => Model.AddedGears[i].Gear.GearType.Label)</h6>
+                <h6 class="card-title">@Html.DisplayFor(modelItem => Model.AddedGears[i].Gear.Name)</h6>
                 @if (Model.AddedGears[i].Gear.ImagePath != null)
                 {
-                    <img style="max-height: 50px; max-width: 2rem" src="~/images/@Model.AddedGears[i].Gear.ImagePath" alt="gearItem picture" />
+                    <img style=" max-height: 66px; max-width: 6rem" src="~/images/@Model.AddedGears[i].Gear.ImagePath" alt="gearItem picture" />
                 }
                 else
                 {
-                    <img style="max-height: 50px; max-width: 2rem" src="~/images/@Model.AddedGears[i].Gear.GearType.ImagePath" alt="gearType picture" />
+                    <img style="width: 6rem" src="~/images/@Model.AddedGears[i].Gear.GearType.ImagePath" alt="gearType picture" />
                 }
                
             </div>
@@ -35,11 +34,11 @@
         </div>
         }
     </div>
-    <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
+    <div style="text-align:center" class="form-group">
+        <input type="submit" value="Pack" class="btn btn-lg btn-primary" />
     </div>
 </form>
 <div>
-    <a asp-controller="Trips" asp-action="Index">Back to List</a>
+    <a asp-controller="Trips" asp-action="Index">Back to Trip List</a>
 </div>
 

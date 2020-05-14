@@ -23,19 +23,6 @@ namespace PackBuddy.Controllers
             _userManager = usermanager;
             _context = context;
         }
-        // GET: GearTrips
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-
-        //// GET: GearTrips/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
-
-        // GET: GearTrips/Create
         public async Task<ActionResult> Create(int tripId)
         {
             var user = await GetCurrentUserAsync();

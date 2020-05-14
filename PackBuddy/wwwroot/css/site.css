@@ -129,9 +129,14 @@ body {
 
 .tripGearCard{
     margin: 2px;
-    min-width: 8.5rem;
+    min-width: 9rem;
    text-align:center;
 }
 .tripDetailGearList::-webkit-scrollbar {
     display: none;
+}
+
+.gearTripCreateCard {
+    width: 11rem;
+    text-align: center;
 }
