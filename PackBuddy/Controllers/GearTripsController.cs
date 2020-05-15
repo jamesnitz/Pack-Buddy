@@ -151,6 +151,18 @@ namespace PackBuddy.Controllers
                     }
                 }
             }
+            foreach(var singleGear in addedGears.ToList())
+            {
+               foreach(var selectedGearItem in SelectedGear)
+                {
+                    if(singleGear.Gear.Id == selectedGearItem.Id)
+                    {
+                        addedGears.Remove(singleGear);
+                    }
+                }
+                
+            }
+
 
             var viewModel = new EditGearTripViewModel()
             {
