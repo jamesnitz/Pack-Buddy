@@ -49,6 +49,7 @@ namespace PackBuddy.Controllers
 
             var requestsRecieved = await _context.SharedGears
                 .Include(g => g.Gear)
+                    .ThenInclude(g => g.GearType)
                 .Include(g => g.ApplicationUser)
                 .Where(g => g.Gear.ApplicationuserId == user.Id)
                 .Where(g => g.AcceptedRequest == false)

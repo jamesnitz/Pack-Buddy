@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -25,6 +25,5 @@ namespace PackBuddy.Models
         public string ApplicationuserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public List<GearTrip> GearTrips { get; set; }
-
     }
 }

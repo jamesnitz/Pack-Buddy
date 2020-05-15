@@ -23,19 +23,6 @@ namespace PackBuddy.Controllers
             _userManager = usermanager;
             _context = context;
         }
-        // GET: GearTrips
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-
-        //// GET: GearTrips/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
-
-        // GET: GearTrips/Create
         public async Task<ActionResult> Create(int tripId)
         {
             var user = await GetCurrentUserAsync();
@@ -150,7 +137,6 @@ namespace PackBuddy.Controllers
                .ToListAsync();
             foreach (var gear in sharedGear)
             {
-                    
                 var gearModel = new GearViewModel()
                 {
                     Gear = gear.Gear,
@@ -165,7 +151,17 @@ namespace PackBuddy.Controllers
                     }
                 }
             }
-
+            foreach(var singleGear in addedGears.ToList())
+            {
+               foreach(var selectedGearItem in SelectedGear)
+                {
+                    if(singleGear.Gear.Id == selectedGearItem.Id)
+                    {
+                        addedGears.Remove(singleGear);
+                    }
+                }
+                
+            }
             var viewModel = new EditGearTripViewModel()
             {
                 Trip = trip,
@@ -224,9 +220,23 @@ namespace PackBuddy.Controllers
                 GearId = gearId,
                 TripId = tripId
             };
+
+            
+            var alreadyAddedGearTrip = await _context.GearTrips.FirstOrDefaultAsync(g => g.GearId == gearTripData.GearId && g.TripId == gearTripData.TripId);
+            
+            if (alreadyAddedGearTrip == null)
+            {
             _context.GearTrips.Add(gearTripData);
             await _context.SaveChangesAsync();
             return RedirectToAction("Edit", "GearTrips", new { tripId = tripId });
+            }
+            else
+            {
+                TempData["alreadyAdded"] = "That item is already packed.";
+                return RedirectToAction("Edit", "GearTrips", new { tripId = tripId });
+
+            }
+
         }
         private void AddSingleGearTrip(int tripId, int gearId)
         {

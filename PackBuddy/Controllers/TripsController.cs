@@ -17,7 +17,6 @@ namespace PackBuddy.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-
         public TripsController(ApplicationDbContext context, UserManager<ApplicationUser> usermanager)
         {
             _userManager = usermanager;
@@ -42,6 +41,7 @@ namespace PackBuddy.Controllers
             var foundTrip = await _context.Trips
                 .Include(t => t.GearTrips)
                     .ThenInclude(t => t.Gear)
+                    .ThenInclude(g => g.GearType)
                 .FirstOrDefaultAsync(t => t.Id == id);
 
             return View(foundTrip);

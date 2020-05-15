@@ -21,14 +21,14 @@
         </select>
         <button class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Filter</button>
     </form>
-    }
     <form class="form-inline my-2 my-lg-0" asp-controller="Gears" asp-action="Index">
         <input class="form-control mr-sm-2" type="text" name="searchString" placeholder="Search For Gear">
         <button hidden class="btn btn-secondary my-2 my-sm-0 compSearch" type="submit">Search</button>
     </form>
+    }
 </div>
 <p>
-    <a asp-action="Create">Add Gear</a>
+    <a asp-action="Create"><strong>Add Gear</strong></a>
 </p>
 @if (ViewBag.nothingFound != true)
 {
@@ -41,12 +41,12 @@
                     <h6 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h6>
                     @if (item.ImagePath != null)
                     {
-                        <img style=" max-height: 66px; max-width: 6rem" src="~/images/@item.ImagePath" alt="gearItem picture" />
+                        <img style="max-height: 66px; max-width: 6rem" src="~/images/@item.ImagePath" alt="gearItem picture" />
                         <button class="btn btn-info" style="margin-top: 4rem" data-target="#gearDetails-@item.Id " data-toggle="modal">View More</button>
                     }
                     else
                     {
-                        <img style=" width: 6rem" src="~/images/@item.GearType.ImagePath" alt="gearType picture" />
+                        <img style="width: 6rem" src="~/images/@item.GearType.ImagePath" alt="gearType picture" />
                         <button style="margin-top: 2rem" class="btn btn-info" data-target="#gearDetails-@item.Id " data-toggle="modal">View More</button>
                     }
                     <div class="modal" id="gearDetails-@item.Id" role="dialog">
@@ -81,18 +81,22 @@
                                 <div>
                                     @if (item.ApplicationuserId == currentUser.Id)
                                     {
-                                        <div class="modalGearButtons">
-                                            <button class="btn btn-outline-success badge-success border-success">@Html.ActionLink("Edit", "Edit", new { id = item.Id }) </button>
-                                            <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@item.Id">
-                                                <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove Item" />
-                                            </form>
-                                        </div>
+                                    <div class="modalGearButtons">
+                                        <form asp-controller="Gears" asp-action="Edit" method="get" asp-route-id="@item.Id">
+                                            <input type="submit" class="btn btn-success bg-success border-success "  value="Update" />
+                                        </form>
+                                        <form asp-controller="Gears" asp-action="Delete" method="post" asp-route-Id="@item.Id">
+                                            <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove Item" />
+                                        </form>
+                                    </div>
                                     }
                                     else
                                     {
+                                        <div class="modalGearButtons">
                                         <form asp-controller="SharedGears" asp-action="Delete" method="post" asp-route-returnItemId="@item.Id">
                                             <input type="submit" class="btn btn-danger bg-danger border-danger" value="Return" />
                                         </form>
+                                        </div>
                                     }
                                 </div>
                             </div>
