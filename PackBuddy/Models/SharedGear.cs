@@ -15,6 +15,7 @@ namespace PackBuddy.Models
         public Gear Gear { get; set; }
         public string ApplicationuserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
+        [Display(Name = "Request Message")]
         public string RequestMessage { get; set; }
         [Required]
         public bool AcceptedRequest { get; set; }
