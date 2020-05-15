@@ -140,3 +140,7 @@ body {
     width: 11rem;
     text-align: center;
 }
+.apiSearchBar{
+    display: flex;
+    justify-content: space-between;
+}

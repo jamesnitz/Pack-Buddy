@@ -95,7 +95,9 @@ namespace PackBuddy.Controllers
                     PurchaseLink = gear.Result.AffiliateWebUrl,
                     ApplicationuserId = user.Id
                 };
-                var allFavorites = await _context.WishLists.ToListAsync();
+                var allFavorites = await _context.WishLists
+                    .Where(w => w.ApplicationuserId == user.Id)
+                    .ToListAsync();
                 foreach(var fav in allFavorites)
                 {
                     if (fav.ProductId == wishList.ProductId)

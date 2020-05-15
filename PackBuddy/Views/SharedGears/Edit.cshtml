@@ -4,12 +4,10 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>SharedGear</h4>
+<h4 style="text-align:center">Send A Message</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div style="margin:auto" class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" class="form-control" />
@@ -28,6 +26,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back</a>
 </div>
 

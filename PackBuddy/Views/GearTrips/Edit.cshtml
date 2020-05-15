@@ -23,14 +23,17 @@
                 @if (item.ImagePath != null)
                 {
                     <img style="max-height: 66px; max-width: 6rem" src="~/images/@item.ImagePath" alt="gearItem picture" />
+                    <form asp-controller="GearTrips" asp-action="RemoveFromTrip" asp-route-comboId="@item.Id, @Model.Trip.Id" method="post">
+                        <input style="margin-top: 5rem;" type="submit" class="btn btn-danger bg-danger border-danger" value="Remove" />
+                    </form>
                 }
                 else
                 {
                     <img style="width: 6rem" src="~/images/@item.GearType.ImagePath" alt="gearType picture" />
+                    <form asp-controller="GearTrips" asp-action="RemoveFromTrip" asp-route-comboId="@item.Id, @Model.Trip.Id" method="post">
+                        <input style="margin-top: 3rem;" type="submit" class="btn btn-danger bg-danger border-danger" value="Remove" />
+                    </form>
                 }
-                <form asp-controller="GearTrips" asp-action="RemoveFromTrip" asp-route-comboId="@item.Id, @Model.Trip.Id" method="post">
-                    <input type="submit" class="btn btn-danger bg-danger border-danger" value="Remove" />
-                </form>
             </div>
         </div>
     }
@@ -42,25 +45,28 @@
 <div class="gearTrip_GearCardList">
     @foreach (var item in Model.AddedGears)
     {
-        <div class=" gearCard card border-primary mb-3" style="max-width: 9rem;">
+        <div class=" gearCard card border-primary mb-3">
             <div class="card-header">@Html.DisplayFor(modelItem => item.Gear.GearType.Label)</div>
             <div class="card-body">
                 <h6 class="card-title">@Html.DisplayFor(modelItem => item.Gear.Name)</h6>
                 @if (item.Gear.ImagePath != null)
                 {
                     <img style="max-height: 66px; max-width: 6rem" src="~/images/@item.Gear.ImagePath" alt="gearItem picture" />
+                    <form asp-controller="GearTrips" asp-route-comboId="@item.Gear.Id, @item.TripId" asp-action="AddToTrip" method="post">
+                        <input style="margin-top: 5rem;" type="submit" class="btn btn-success bg-success border-success" value="Add" />
+                    </form>
                 }
                 else
                 {
                     <img style="width: 6rem" src="~/images/@item.Gear.GearType.ImagePath" alt="gearType picture" />
+                    <form asp-controller="GearTrips" asp-route-comboId="@item.Gear.Id, @item.TripId" asp-action="AddToTrip" method="post">
+                        <input style="margin-top: 3rem;" type="submit" class="btn btn-success bg-success border-success" value="Add" />
+                    </form>
                 }
-                <form asp-controller="GearTrips" asp-route-comboId="@item.Gear.Id, @item.TripId" asp-action="AddToTrip" method="post">
-                    <input type="submit" class="btn btn-success bg-success border-success" value="Add" />
-                </form>
             </div>
         </div>
     }
 </div>
 <div>
-    <a asp-controller="Trips" asp-action="Index">Back to List</a>
+    <a asp-controller="Trips" asp-action="Details" asp-route-id="@Model.Trip.Id">Back to Details</a>
 </div>
