@@ -137,7 +137,6 @@ namespace PackBuddy.Controllers
                .ToListAsync();
             foreach (var gear in sharedGear)
             {
-                    
                 var gearModel = new GearViewModel()
                 {
                     Gear = gear.Gear,
@@ -211,9 +210,23 @@ namespace PackBuddy.Controllers
                 GearId = gearId,
                 TripId = tripId
             };
+
+            
+            var alreadyAddedGearTrip = await _context.GearTrips.FirstOrDefaultAsync(g => g.GearId == gearTripData.GearId && g.TripId == gearTripData.TripId);
+            
+            if (alreadyAddedGearTrip == null)
+            {
             _context.GearTrips.Add(gearTripData);
             await _context.SaveChangesAsync();
             return RedirectToAction("Edit", "GearTrips", new { tripId = tripId });
+            }
+            else
+            {
+                TempData["alreadyAdded"] = "That item is already packed.";
+                return RedirectToAction("Edit", "GearTrips", new { tripId = tripId });
+
+            }
+
         }
         private void AddSingleGearTrip(int tripId, int gearId)
         {
