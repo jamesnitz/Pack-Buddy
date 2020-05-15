@@ -17,7 +17,6 @@ namespace PackBuddy.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-
         public TripsController(ApplicationDbContext context, UserManager<ApplicationUser> usermanager)
         {
             _userManager = usermanager;

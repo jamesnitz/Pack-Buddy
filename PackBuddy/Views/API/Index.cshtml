@@ -2,6 +2,13 @@
 @{
     ViewData["Title"] = "Index";
 }
+@if (TempData.ContainsKey("alreadyAdded"))
+{
+    <div class="alert alert-danger">
+        @TempData["alreadyAdded"]
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    </div>
+}
 <h1>Index</h1>
 <form class="form-inline my-2 my-lg-0" asp-controller="API" asp-action="Index">
     <input class="form-control mr-sm-2" type="text" name="searchString" placeholder="Product search">
@@ -27,7 +34,7 @@ else
             <thead>
                 <tr>
                     <th>
-                        ID
+
                     </th>
                     <th>
                         Name
@@ -36,54 +43,82 @@ else
                         Price
                     </th>
                     <th>
-                        Pic
+                        Purchase
                     </th>
+                        @if (ViewBag.favorite == true)
+                        {
+                    <th>
+                        Remove From Favorites
+                    </th>
+                        }
+                        else
+                        {
+                        <th>
+                            Add to Favorites
+                        </th>
+                        }
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @for (var i = 0; i < Model.Result.Count; i++)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Result[i].Id)
-                            <img src="@Html.DisplayFor(ModelItem => Model.Result[i].Images.PrimarySmall)" />
+                <tr>
+                    <td>
+                        <img src="@Html.DisplayFor(ModelItem => Model.Result[i].Images.PrimarySmall)" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Result[i].Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Result[i].FinalPrice)
+                    </td>
+                    <td>
+                        <a href="@Model.Result[i].AffiliateWebUrl" target="_blank">Purchase </a>
+                    </td>
+                    @if (ViewBag.Favorite == false)
+                    {
+                        <td style="text-align:center;">
+                            <form asp-controller="API" asp-action="Create" asp-route-Id="@Model.Result[i].Id" method="post">
+                                <button type="submit"><img style=" width:30px; height:30px;" src="~/images/goldstar.png"></button>
+                            </form>
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Result[i].Name)
+                    }
+                    else
+                    {
+                        <td style="text-align:center;">
+                            <form asp-controller="API" asp-action="Delete" asp-route-Id="@Model.Result[i].Id" method="post">
+                                <button type="submit"><img style=" width:30px; height:30px;" src="~/images/goldstar.png"></button>
+                            </form>
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Result[i].FinalPrice)
-                        </td>
-                        <td>
-                            <button class="btn btn-info" data-target="#apigear-@Model.Result[i].Id " data-toggle="modal">View More</button>
-                        </td>
-                        <div class="modal" id="apigear-@Model.Result[i].Id" role="dialog">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Details</h4>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <a href="@Model.Result[i].AffiliateWebUrl" target="_blank">Purchase </a>
-                                    </div>
-                                    @if(ViewBag.favorite == true)
-                                    {
-                                        <form asp-controller="API" asp-action="Delete" asp-route-Id="@Model.Result[i].Id" method="post">
-                                            <button type="submit"><img src="~/images/goldstar.png"></button>
-                                        </form>
-                                    }
-                                    else
-                                    {
-                                    <form asp-controller="API" asp-action="Create" asp-route-Id="@Model.Result[i].Id" method="post">
-                                        <button type="submit"><img src="~/images/star.png"></button>
-                                    </form>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </tr>
+                    }
+                    @*<div class="modal" id="apigear-@Model.Result[i].Id" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Details</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <a href="@Model.Result[i].AffiliateWebUrl" target="_blank">Purchase </a>
+                        <a href="@Model.Result[i].Reviews.ReviewsUrl" target="_blank">Reviews </a>
+                    </div>
+                    @if (ViewBag.favorite == true)
+                    {
+                        <form asp-controller="API" asp-action="Delete" asp-route-Id="@Model.Result[i].Id" method="post">
+                            <button type="submit"><img src="~/images/goldstar.png"></button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-controller="API" asp-action="Create" asp-route-Id="@Model.Result[i].Id" method="post">
+                            <button type="submit">Favorite</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>*@
+                </tr>
                 }
             </tbody>
         </table>

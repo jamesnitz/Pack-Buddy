@@ -52,7 +52,7 @@ namespace PackBuddy.Controllers
             }
             else
             {
-
+            ViewBag.favorite = false;
             if (searchString != null)
             {
             var gear = await GetGearRecord(searchString);
@@ -95,11 +95,20 @@ namespace PackBuddy.Controllers
                     PurchaseLink = gear.Result.AffiliateWebUrl,
                     ApplicationuserId = user.Id
                 };
+                var allFavorites = await _context.WishLists.ToListAsync();
+                foreach(var fav in allFavorites)
+                {
+                    if (fav.ProductId == wishList.ProductId)
+                    {
+                        TempData["alreadyAdded"] = "This item is already a favorite.";
+                        return RedirectToAction("Index", "API", new { favorite = true });
+                    }
+                }
                 _context.WishLists.Add(wishList);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "API", new { favorite = true });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return View();
             }
@@ -139,7 +148,7 @@ namespace PackBuddy.Controllers
                 _context.WishLists.Remove(wishListItem);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "API", new { favorite = true }) ;
             }
             catch
             {
@@ -165,7 +174,7 @@ namespace PackBuddy.Controllers
             var key = apiSecret.key;
             using (var client = new HttpClient())
             {
-                var content = await client.GetStringAsync($"http://api.sierratradingpost.com/api/1.0/product/{id}/?api_key={key}");
+                var content = await client.GetStringAsync($"https://api.sierra.com/api/1.0/product/{id}/?api_key=474b16f87f0a7023541b1fd56669294f");
                 var response = JsonConvert.DeserializeObject<Response>(content);
                 return response;
             }

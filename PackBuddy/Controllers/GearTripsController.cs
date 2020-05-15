@@ -162,8 +162,6 @@ namespace PackBuddy.Controllers
                 }
                 
             }
-
-
             var viewModel = new EditGearTripViewModel()
             {
                 Trip = trip,
