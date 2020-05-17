@@ -8,5 +8,6 @@ namespace PackBuddy.Models
     public class SierraTradingPostKey
     {
         public string key { get; set; }
+        public string Connection { get; set; }
     }
 }
