@@ -4,7 +4,7 @@ Pack Buddy is a web-app designed for users to register all their camping gear/eq
 
 Pack Buddy is an Asp.NetCore MVC web app with Entity and Identity Frameworks, Sierra Trading Post's API, and styling with Bootstrap and CSS
 
-<img src="PackBuddy/wwwroot/Images/pb-1.jpg" height="170" width="280">      <img src="PackBuddy/wwwroot/Images/pb-2.jpg" height="170" width="280">
+<img src="~/images/pb-1.jpg" height="170" width="280">      <img src="~/images/pb-2.jpg" height="170" width="280">
 
 ## Installation
 
