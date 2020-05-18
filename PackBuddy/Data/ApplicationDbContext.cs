@@ -48,32 +48,50 @@ namespace PackBuddy.Data
                 new GearType()
                 {
                     Id = 1,
-                    Label = "Clothing"
+                    Label = "Clothing",
+                    ImagePath = "type_Clothes.png"
                 },
                 new GearType()
                 {
                     Id = 2,
-                    Label = "Cooking"
+                    Label = "Cookware",
+                    ImagePath = "type_cooking.png"
                 },
                 new GearType()
                 {
                     Id = 3,
-                    Label = "Backpacks"
+                    Label = "Backpacks",
+                    ImagePath = "type_backpack.png"
                 },
                 new GearType()
                 {
                     Id = 4,
-                    Label = "Tents"
+                    Label = "Hygiene",
+                    ImagePath = "type_hygiene.png"
                 },
                 new GearType()
                 {
                     Id = 5,
-                    Label = "Sleeping Gear"
+                    Label = "Sleep System",
+                    ImagePath = "type_sleeping.png"
                 },
                 new GearType()
                 {
                     Id = 6,
-                    Label = "Accessories"
+                    Label = "Activities",
+                    ImagePath = "type_activities.png"
+                },
+                new GearType()
+                {
+                    Id = 7,
+                    Label = "Electronics",
+                    ImagePath = "type_electronics.png"
+                },
+                new GearType()
+                {
+                    Id = 8,
+                    Label = "Tools/misc.",
+                    ImagePath = "type_tools.png"
                 }
             );
 
@@ -87,6 +105,7 @@ namespace PackBuddy.Data
                     Description = "Light, durable, water-proof hiking Boots",
                     Name = "Terrex Free Hiker Pro",
                     Rating = 5,
+                    ImagePath = null,
                     GearTypeId = 1
                 },
                 new Gear()
@@ -97,7 +116,8 @@ namespace PackBuddy.Data
                     Description = "Solid tent",
                     Name = "Big Agnes UL2",
                     Rating = 4,
-                    GearTypeId = 4
+                    ImagePath = null,
+                    GearTypeId = 5
                 }
             );
         }
