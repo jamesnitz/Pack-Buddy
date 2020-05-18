@@ -199,8 +199,10 @@ namespace PackBuddy.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: false),
                     Price = table.Column<double>(nullable: false),
+                    PrimaryImage = table.Column<string>(nullable: true),
                     PurchaseLink = table.Column<string>(nullable: true),
-                    ApplicationuserId = table.Column<string>(nullable: false)
+                    ApplicationuserId = table.Column<string>(nullable: false),
+                    ProductId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -301,30 +303,32 @@ namespace PackBuddy.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "00000000-ffff-ffff-ffff-ffffffffffff", 0, "29f31f54-c273-496c-8a71-3763ae0e65d3", "james@james.com", true, "James", "Nitz", false, null, "JAMES@JAMES.COM", "JAMES@JAMES.COM", "AQAAAAEAACcQAAAAEFUlcWqqOkBiehNyp2mZkLdea4gI6aIr0/NxVFbXy91coJUh0CQ5qrklj6wgna9yGA==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", false, "james@james.com" });
+                values: new object[] { "00000000-ffff-ffff-ffff-ffffffffffff", 0, "58a1b944-e23f-4494-bb12-ba207cdf6da5", "james@james.com", true, "James", "Nitz", false, null, "JAMES@JAMES.COM", "JAMES@JAMES.COM", "AQAAAAEAACcQAAAAEGuTn1AjvQjyUpy3TQtMJzhoY0OFj2DEW2LA15sFGgGz4d1ATD71Kc1gqkb2Q/04hQ==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", false, "james@james.com" });
 
             migrationBuilder.InsertData(
                 table: "GearTypes",
                 columns: new[] { "Id", "ImagePath", "Label" },
                 values: new object[,]
                 {
-                    { 1, null, "Clothing" },
-                    { 2, null, "Cooking" },
-                    { 3, null, "Backpacks" },
-                    { 4, null, "Tents" },
-                    { 5, null, "Sleeping Gear" },
-                    { 6, null, "Accessories" }
+                    { 1, "type_Clothes.png", "Clothing" },
+                    { 2, "type_cooking.png", "Cookware" },
+                    { 3, "type_backpack.png", "Backpacks" },
+                    { 4, "type_hygiene.png", "Hygiene" },
+                    { 5, "type_sleeping.png", "Sleep System" },
+                    { 6, "type_activities.png", "Activities" },
+                    { 7, "type_electronics.png", "Electronics" },
+                    { 8, "type_tools.png", "Tools/misc." }
                 });
 
             migrationBuilder.InsertData(
                 table: "Gears",
-                columns: new[] { "Id", "ApplicationuserId", "Condtion", "Description", "GearTypeId", "ImagePath", "Name", "Rating" },
+                columns: new[] { "Id", "ApplicationuserId", "Condition", "Description", "GearTypeId", "ImagePath", "Name", "Rating" },
                 values: new object[] { 1, "00000000-ffff-ffff-ffff-ffffffffffff", "Like New", "Light, durable, water-proof hiking Boots", 1, null, "Terrex Free Hiker Pro", 5 });
 
             migrationBuilder.InsertData(
                 table: "Gears",
-                columns: new[] { "Id", "ApplicationuserId", "Condtion", "Description", "GearTypeId", "ImagePath", "Name", "Rating" },
-                values: new object[] { 2, "00000000-ffff-ffff-ffff-ffffffffffff", "Slightly used", "Solid tent", 4, null, "Big Agnes UL2", 4 });
+                columns: new[] { "Id", "ApplicationuserId", "Condition", "Description", "GearTypeId", "ImagePath", "Name", "Rating" },
+                values: new object[] { 2, "00000000-ffff-ffff-ffff-ffffffffffff", "Slightly used", "Solid tent", 5, null, "Big Agnes UL2", 4 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

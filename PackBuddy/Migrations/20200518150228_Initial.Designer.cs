@@ -10,8 +10,8 @@ using PackBuddy.Data;
 namespace PackBuddy.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200511193223_wishlist")]
-    partial class wishlist
+    [Migration("20200518150228_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -233,7 +233,7 @@ namespace PackBuddy.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e2412d6c-563f-4749-9009-bba87dd21dd2",
+                            ConcurrencyStamp = "58a1b944-e23f-4494-bb12-ba207cdf6da5",
                             Email = "james@james.com",
                             EmailConfirmed = true,
                             FirstName = "James",
@@ -241,7 +241,7 @@ namespace PackBuddy.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JAMES@JAMES.COM",
                             NormalizedUserName = "JAMES@JAMES.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDjpzLuwSuGRRCtuetsEiOxDbuuLNl7ZMXq5dwwnld7k+lszKEDMQrDrl6xHlhRlfg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGuTn1AjvQjyUpy3TQtMJzhoY0OFj2DEW2LA15sFGgGz4d1ATD71Kc1gqkb2Q/04hQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,
@@ -260,7 +260,7 @@ namespace PackBuddy.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Condtion")
+                    b.Property<string>("Condition")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -293,7 +293,7 @@ namespace PackBuddy.Migrations
                         {
                             Id = 1,
                             ApplicationuserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            Condtion = "Like New",
+                            Condition = "Like New",
                             Description = "Light, durable, water-proof hiking Boots",
                             GearTypeId = 1,
                             Name = "Terrex Free Hiker Pro",
@@ -303,9 +303,9 @@ namespace PackBuddy.Migrations
                         {
                             Id = 2,
                             ApplicationuserId = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            Condtion = "Slightly used",
+                            Condition = "Slightly used",
                             Description = "Solid tent",
-                            GearTypeId = 4,
+                            GearTypeId = 5,
                             Name = "Big Agnes UL2",
                             Rating = 4
                         });
@@ -355,32 +355,50 @@ namespace PackBuddy.Migrations
                         new
                         {
                             Id = 1,
+                            ImagePath = "type_Clothes.png",
                             Label = "Clothing"
                         },
                         new
                         {
                             Id = 2,
-                            Label = "Cooking"
+                            ImagePath = "type_cooking.png",
+                            Label = "Cookware"
                         },
                         new
                         {
                             Id = 3,
+                            ImagePath = "type_backpack.png",
                             Label = "Backpacks"
                         },
                         new
                         {
                             Id = 4,
-                            Label = "Tents"
+                            ImagePath = "type_hygiene.png",
+                            Label = "Hygiene"
                         },
                         new
                         {
                             Id = 5,
-                            Label = "Sleeping Gear"
+                            ImagePath = "type_sleeping.png",
+                            Label = "Sleep System"
                         },
                         new
                         {
                             Id = 6,
-                            Label = "Accessories"
+                            ImagePath = "type_activities.png",
+                            Label = "Activities"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ImagePath = "type_electronics.png",
+                            Label = "Electronics"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ImagePath = "type_tools.png",
+                            Label = "Tools/misc."
                         });
                 });
 

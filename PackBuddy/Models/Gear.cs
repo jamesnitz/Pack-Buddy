@@ -24,6 +24,6 @@ namespace PackBuddy.Models
         [Required]
         public string ApplicationuserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
-        public List<GearTrip> GearTrips { get; set; }
+        public virtual ICollection<GearTrip> GearTrips { get; set; }
     }
 }
